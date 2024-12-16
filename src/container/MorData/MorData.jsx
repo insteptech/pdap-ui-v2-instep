@@ -144,9 +144,19 @@ export const MorData = ({ sessionObject }) => {
 
         setDeletedCondition(changeData);
     };
-    const showMoreData = () => {
-        setShowMore(!showMore)
-    }
+   
+    const showMoreData = (index) => {
+        // Update collapse state based on index
+        const changeData = morInsightData?.map((value, idx) => {
+          return idx === index 
+            ? { ...value, collapse: !value?.collapse } 
+            : value;
+        });
+      
+        setMorInsightData(changeData);
+      };
+
+      
     const CustomTooltip = styled(({ className, ...props }) => (
         <Tooltip {...props} classes={{ popper: className }} />
     ))(({ theme }) => ({
@@ -367,14 +377,14 @@ export const MorData = ({ sessionObject }) => {
                                                                 display: "block",
                                                             },
                                                         }}
-                                                        onClick={() => showMoreData()}
+                                                        onClick={() => showMoreData(index)}
                                                     >
-                                                        {!showMore ? "See All" : "See Less"}
+                                                        {!item?.collapse ? "See All" : ""}
                                                     </StyledText>
                                                 </Box>
                                                 {/* mobile screen-code */}
 
-                                                {showMore && (
+                                                {item?.collapse && (
                                                     <Box sx={{ marginTop: '12px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
                                                         <Box sx={{ display: 'flex', gap: '12px', alignItems: "center", width: "100%" }}>
                                                             <Typography component={'span'} className="dark-text-typo">HCC code(s):</Typography>
@@ -452,7 +462,33 @@ export const MorData = ({ sessionObject }) => {
                                                                 {item?.info?.[3]}
 
                                                             </StyleCode2>
+
+                                                           
                                                         </Box>
+
+                                                        <StyledText className="display-see-more-see-less"
+                                                        sx={{
+                                                            fontWeight: 600,
+                                                            textDecorationLine: "underline",
+                                                            color: theme.palette.secondary.main,
+                                                            display: "inline-block",
+                                                            cursor: "pointer",
+                                                            flexShrink: 0,
+                                                            fontSize: "85%",
+                                                            [theme.breakpoints.up("md")]: {
+                                                               
+                                                                fontSize: "90%",
+                                                            },
+                                                            [theme.breakpoints.down("md")]: {
+                                                                ml: "0px",
+                                                                fontSize: "85%",
+                                                                display: "block",
+                                                            },
+                                                        }}
+                                                        onClick={() => showMoreData(index)}
+                                                    >
+                                                        {"See Less"}
+                                                    </StyledText>
                                                     </Box>
                                                 )}
 
@@ -528,8 +564,6 @@ export const MorData = ({ sessionObject }) => {
                                                 }}
                                             >
                                           
-                                                {console.log(item.info,'uyut6')}
-
                                                 <CustomTooltip 
                                                     title={<div className={"abcd"}><TooltipComponent info={item.info} /></div>} 
                                                 >
