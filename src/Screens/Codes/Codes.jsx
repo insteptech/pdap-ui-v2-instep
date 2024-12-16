@@ -804,115 +804,71 @@ export const Codes = () => {
   const suspectCodeNew = useSelector((state) => state.user.data.suspectedCode);
   const [rejectScanCode, setRejectScanCode] = useState([]);
 
-  let codesData = [];
+  let codesData = [
+    {
+      key: 1,
+      code: "Existing conditions",
+      codeCount: summary?.existing_codes_count,
+      problemList: "Recapturing required",
+      container: <ExistingConditions sessionObject={sessionObject} handleAddEventData={handleAddEventData} />,
+    },
+    {
+      key: 2,
+      code: "Suspects",
+      codeCount: summary?.suspect_conditions_count,
+      problemList: "Review Potential diagnoses",
+      container: <Suspects sessionObject={sessionObject} handleAddEventData={handleAddEventData} />,
+    },
+    {
+      key: 3,
+      code: "Codes not in problem list",
+      codeCount: summary?.recapture_codes_count,
+      problemList: "Update Problem List",
+      container: <CodesNotList sessionObject={sessionObject} handleAddEventData={handleAddEventData} />,
+    },
+    {
+      key: 4,
+      code: "Addressed Codes",
+      codeCount: summary?.addressed_codes_count,
+      container: <AddressedCodes sessionObject={sessionObject} handleAddEventData={handleAddEventData} />,
+    },
+    {
+      key: 5,
+      code: "Additional diagnoses",
+      codeCount: summary?.duplicate_codes_count,
+      container: <DuplicateCodes sessionObject={sessionObject} handleAddEventData={handleAddEventData} />,
+    },
+    {
+      key: 6,
+      code: "Deleted Codes / Conditions",
+      codeCount: summary?.deleted_codes_count,
+      container: <DeletedCodes sessionObject={sessionObject} handleAddEventData={handleAddEventData} />,
+    }
+  ];
+
   if (tabs && tabs['patient_dashboard_extended_data']?.active) {
-    codesData = [
-      {
-        key: 1,
-        code: "Existing conditions",
-        codeCount: summary?.existing_codes_count,
-        problemList: "Recapturing required",
-        container: <ExistingConditions sessionObject={sessionObject} handleAddEventData={handleAddEventData} />,
-      },
-      {
-        key: 2,
-        code: "Suspects",
-        codeCount: summary?.suspect_conditions_count,
-        problemList: "Review Potential diagnoses",
-        container: <Suspects sessionObject={sessionObject} handleAddEventData={handleAddEventData} />,
-      },
-      {
-        key: 3,
-        code: "Codes not in problem list",
-        codeCount: summary?.recapture_codes_count,
-        problemList: "Update Problem List",
-        container: <CodesNotList sessionObject={sessionObject} handleAddEventData={handleAddEventData} />,
-      },
-      {
-        key: 4,
-        code: "Addressed Codes",
-        codeCount: summary?.addressed_codes_count,
-        container: <AddressedCodes sessionObject={sessionObject} handleAddEventData={handleAddEventData} />,
-      },
-      {
-        key: 5,
-        code: "Additional diagnoses",
-        codeCount: summary?.duplicate_codes_count,
-        container: <DuplicateCodes sessionObject={sessionObject} handleAddEventData={handleAddEventData} />,
-      },
-      {
-        key: 7,
-        code: "External Data",
-        codeCount: summary?.external_data_count,
-        container: <Scans setRejectScanCode={setRejectScanCode} rejectScanCode={rejectScanCode} sessionObject={sessionObject} handleAddEventData={handleAddEventData} />,
-        isShow: tabs && tabs['patient_dashboard_extended_da']?.active || false,
-      },
-      {
-        key: 6,
-        code: "Deleted Codes / Conditions",
-        codeCount: summary?.deleted_codes_count,
-        container: <DeletedCodes sessionObject={sessionObject} handleAddEventData={handleAddEventData} />,
-      },
-
-      {
-        key: 8,
-        code: "Mor Data Insight",
-        codeCount: summary?.deleted_codes_count,
-        container: <MorData sessionObject={sessionObject} handleAddEventData={handleAddEventData} />,
-
-      },
-    ];
-  } else {
-    codesData = [
-      {
-        key: 1,
-        code: "Existing conditions",
-        codeCount: summary?.existing_codes_count,
-        problemList: "Recapturing required",
-        container: <ExistingConditions sessionObject={sessionObject} handleAddEventData={handleAddEventData} />,
-      },
-      {
-        key: 2,
-        code: "Suspects",
-        codeCount: summary?.suspect_conditions_count,
-        problemList: "Review Potential diagnoses",
-        container: <Suspects sessionObject={sessionObject} handleAddEventData={handleAddEventData} />,
-      },
-      {
-        key: 3,
-        code: "Codes not in problem list",
-        codeCount: summary?.recapture_codes_count,
-        problemList: "Update Problem List",
-        container: <CodesNotList sessionObject={sessionObject} handleAddEventData={handleAddEventData} />,
-      },
-      {
-        key: 4,
-        code: "Addressed Codes",
-        codeCount: summary?.addressed_codes_count,
-        container: <AddressedCodes sessionObject={sessionObject} handleAddEventData={handleAddEventData} />,
-      },
-      {
-        key: 5,
-        code: "Additional diagnoses",
-        codeCount: summary?.duplicate_codes_count,
-        container: <DuplicateCodes sessionObject={sessionObject} handleAddEventData={handleAddEventData} />,
-      },
-      {
-        key: 6,
-        code: "Deleted Codes / Conditions",
-        codeCount: summary?.deleted_codes_count,
-        container: <DeletedCodes sessionObject={sessionObject} handleAddEventData={handleAddEventData} />,
-      },
-
-      {
-        key: 7,
-        code: "Mor Data Insight",
-        codeCount: summary?.deleted_codes_count,
-        container: <MorData sessionObject={sessionObject} handleAddEventData={handleAddEventData} />,
-
-      },
-    ];
+    const externalDataItem = {
+      key: 7,
+      code: "External Data",
+      codeCount: summary?.external_data_count,
+      container: <Scans setRejectScanCode={setRejectScanCode} rejectScanCode={rejectScanCode} sessionObject={sessionObject} handleAddEventData={handleAddEventData} />,
+      isShow: tabs['patient_dashboard_extended_da']?.active || false,
+    };
+    codesData.splice(5, 0, externalDataItem); // Add at position 4 (after key 3)
   }
+  
+  if (tabs && tabs['patient_dashboard_mor']?.active) {
+    const morDataItem = {
+      key: 8,
+      code: "Mor Data Insight",
+      codeCount: summary?.mor_condition_count || 1,
+      container: <MorData sessionObject={sessionObject} handleAddEventData={handleAddEventData} />,
+    };
+    codesData.splice(5, 0, morDataItem); // Add at position 6 (after key 5)
+  }
+  
+
+
 
   const handleDelete = (event, item, key) => {
     event.stopPropagation()

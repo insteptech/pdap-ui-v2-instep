@@ -4,6 +4,7 @@ import {
     Grid,
     Typography,
     Tooltip,
+    styled,
 } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,6 +23,7 @@ import {
     StyledAccordingBox,
     StyleCode2,
 } from "../Common/StyledMuiComponents";
+import { Button } from "bootstrap";
 
 export const MorData = ({ sessionObject }) => {
 
@@ -34,10 +36,11 @@ export const MorData = ({ sessionObject }) => {
     const [checkedAcceptAll, setCheckedAcceptAll] = useState([]);
     const [deletedCondition, setDeletedCondition] = useState([]);
     const deletedCodes = useSelector((state) => state?.summary);
-    const [selecteddeletedCodes, setSelecteddeletedCodes] = useState([]);
+    const [selectedDeletedCodes, setSelectedDeletedCodes] = useState([]);
     const [sessionObjLoaded, setSessionObjLoaded] = useState(false);
-    const [rejectdeletedCodes, setRejectdeletedCodes] = useState([]);
+    const [rejectDeletedCodes, setRejectDeletedCodes] = useState([]);
     const state = useSelector((state) => state.user.data.MorDataInsight);
+    const [showMore, setShowMore] = useState(false)
 
     useEffect(() => {
         dispatch(MorDataInsight());
@@ -100,18 +103,18 @@ export const MorData = ({ sessionObject }) => {
                     : deletedCodes?.length > 0
                         ? deletedCodes
                         : sessionObject?.deletedCodes || [];
-            selecteddeletedCodes?.length === 0 &&
-                setSelecteddeletedCodes([...newDuplicate]);
+            selectedDeletedCodes?.length === 0 &&
+                setSelectedDeletedCodes([...newDuplicate]);
 
             let newDuplicateReject =
-                rejectdeletedCodes?.length > 0 &&
+                rejectDeletedCodes?.length > 0 &&
                     sessionObject?.deletedCodesReject?.length > 0
-                    ? [...sessionObject?.deletedCodesReject, ...rejectdeletedCodes]
-                    : rejectdeletedCodes?.length > 0
-                        ? rejectdeletedCodes
+                    ? [...sessionObject?.deletedCodesReject, ...rejectDeletedCodes]
+                    : rejectDeletedCodes?.length > 0
+                        ? rejectDeletedCodes
                         : sessionObject?.deletedCodesReject || [];
-            rejectdeletedCodes?.length === 0 &&
-                setRejectdeletedCodes([...newDuplicateReject]);
+            rejectDeletedCodes?.length === 0 &&
+                setRejectDeletedCodes([...newDuplicateReject]);
 
             checkCodesAvailability(deletedCondition, deletedCodes);
             setSessionObjLoaded(true);
@@ -141,9 +144,85 @@ export const MorData = ({ sessionObject }) => {
 
         setDeletedCondition(changeData);
     };
+    const showMoreData = () => {
+        setShowMore(!showMore)
+    }
+    const CustomTooltip = styled(({ className, ...props }) => (
+        <Tooltip {...props} classes={{ popper: className }} />
+    ))(({ theme }) => ({
+        [`& .MuiTooltip-tooltip`]: {
+            borderRadius: '4px 0px 0px 0px',
+            opacity: 0,
+            boxShadow: '0px 3px 15px 0px #00000026',
+            backgroundColor: '#FFFFFF',
+            width: '275px',
+            ".sticky-tooltip-box":{
+                maxHeight: '120px',
+                overflowX: 'auto',
+            }
+        },
+    }));
 
-    console.log(morInsightData, state, "morInsightData")
+    const TooltipComponent = ( info ) => {
+        const Infovalue = info.info[0];
+        return (
+            <div className="custom-tooltip-design">
+                <h3 style={{color:'#000000'}} className="tooltip-sticky-heading">HCC code(s)</h3>
+               
+                    <Box sx={{ maxHeight: '120px', overflowX: 'auto', }}>
+                    {Infovalue.map((key)=>(
+                         <Box sx={{ display: 'flex', marginBottom: "12px", }} className="sticky-tooltip-box">
+                        <StyleCode key={key} className="stylecode-button insight-col-hcc-code-stylecode"
+                        sx={{
+                            ml: 0.5,
+                            maxWidth: "100%",
+                            flexShrink: '0',
+                            textOverflow: "ellipsis",
+                            height: 'fit-content',
+                            [theme.breakpoints.only("md")]: {
+                                mr: 2,
+                            },
 
+                            [theme.breakpoints.up("md")]: {
+                                mr: 2,
+
+                            },
+                        }}
+                    >
+                        <Tooltip >{key[0]}</Tooltip>
+                    </StyleCode>
+                    <Typography sx={{ color: '#000', }} component={'p'}>{key[1]}</Typography>
+                    </Box>
+                    ))}
+                   </Box>
+
+                    {/* <StyleCode className="stylecode-button insight-col-hcc-code-stylecode"
+                        sx={{
+                            ml: 0.5,
+                            maxWidth: "100%",
+                            flexShrink: '0',
+                            textOverflow: "ellipsis",
+                            height: 'fit-content',
+                            [theme.breakpoints.only("md")]: {
+                                mr: 2,
+                            },
+
+                            [theme.breakpoints.up("md")]: {
+                                mr: 2,
+
+                            },
+                        }}
+                    >
+                        {console.log(info?.[0][0][0],'injdhfudf')}
+                        <Tooltip >{info?.[0][0][0]}</Tooltip>
+                    </StyleCode> */}
+                      
+                    {/* <Typography sx={{ color: '#000', }} component={'p'}>{info?.[0][0]}</Typography> */}
+                
+
+            </div>
+        );
+    };
     return (
         <Box className="ContentBox">
             {/* Header for accordion body */}
@@ -163,32 +242,32 @@ export const MorData = ({ sessionObject }) => {
                             <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                                 <StyledBox
                                     className="mor_insight_datas more-data-table"
+                                    sx={{justifyContent:'space-between'}}
                                 >
 
                                     <StyledText className="mor_insight_data insight-col-decs">
                                         Description
                                     </StyledText>
 
-                                    <StyledText className="mor_insight_data insight-col-hcc-code">
+                                    <StyledText className="mor_insight_data insight-col-hcc-code more-table-sm-none ">
                                         HCC Code(s)
                                     </StyledText>
 
-                                    <StyledText className="mor_insight_data insight-col-hcc">
+                                    <StyledText className="mor_insight_data insight-col-hcc  more-table-sm-none stylecode-left-border">
                                         HCC
                                     </StyledText>
 
-
-
-                                    {tabs && tabs["patient_dashboard_weights"]?.active && (
-                                        <StyledText className="mor_insight_data  insight-col-raf">
+                                    {tabs && tabs["patient_dashboard_mor_raf"]?.active && (
+                                        <StyledText className="mor_insight_data  insight-col-raf stylecode-left-border">
                                             RAF
                                         </StyledText>
                                     )}
 
-                                    <StyledText className="mor_insight_data insight-col-recived">
-                                        Received On
-                                    </StyledText>
-
+                                    {tabs && tabs["patient_dashboard_mor_recieved_on"]?.active && (
+                                        <StyledText className="mor_insight_data insight-col-recived  more-table-sm-none stylecode-left-border">
+                                            Received On
+                                        </StyledText>
+                                    )}
                                 </StyledBox>
                             </Grid>
                             {/* <Grid item xs={5.7} sm={5.2} md={6} lg={4.5} xl={4.5} >
@@ -201,7 +280,6 @@ export const MorData = ({ sessionObject }) => {
                 </StyledHeader>
             </Box>
             {/* Header end for accordion body */}
-
             <Box sx={{ display: "flex", flexDirection: "column", gap: "0rem" }}>
                 {morInsightData &&
                     morInsightData?.slice(0, 3)?.map((item, index) => {
@@ -212,7 +290,8 @@ export const MorData = ({ sessionObject }) => {
                                     <Grid
                                         container
                                         spacing={0}
-                                        className="ContentBody"
+                                        className="ContentBody more-data-table-body"
+                                        justifyContent={'space-between'}
                                         sx={{
                                             padding: "10px 10px 10px",
                                             backgroundColor: "#fff",
@@ -227,7 +306,7 @@ export const MorData = ({ sessionObject }) => {
 
                                         }} item className="mor_insight_data insight-col-decs">
 
-                                            <Box 
+                                            <Box
                                                 // sx={{
                                                 //     [theme.breakpoints.only("lg")]: {
                                                 //         width: "50%",
@@ -240,25 +319,143 @@ export const MorData = ({ sessionObject }) => {
                                                 // }}
                                                 className="acc-content-body-desc"
                                             >
-                                                <StyledText
-                                                    sx={{
-                                                        fontWeight: 400,
-                                                        padding: "0",
-                                                        overflow: "hidden",
-                                                        maxWidth: "100%",
-                                                        textOverflow: "ellipsis",
-                                                        whiteSpace: "nowrap",
-                                                        textTransform: "inherit",
-                                                        display: "inline-block",
-                                                        verticalAlign: "bottom",
-                                                        [theme.breakpoints.up("md")]: {
-                                                            fontSize: "90%",
-                                                        },
+                                                <Box sx={{
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    gap: '12px',
+                                                }}>
+                                                    <StyledText
+                                                        sx={{
+                                                            fontWeight: 400,
+                                                            padding: "0",
+                                                            overflow: "hidden",
+                                                            maxWidth: "100%",
+                                                            textOverflow: "ellipsis",
+                                                            whiteSpace: "nowrap",
+                                                            textTransform: "inherit",
+                                                            display: "inline-block",
+                                                            verticalAlign: "bottom",
 
-                                                    }}
-                                                >
-                                                    {item?.code}
-                                                </StyledText>
+                                                            [theme.breakpoints.up("md")]: {
+                                                                fontSize: "90%",
+                                                            },
+                                                            '@media (max-width:600px)': {
+                                                                fontSize: "14px",
+                                                                lineHeight: '17px'
+                                                            }
+
+                                                        }}
+                                                    >
+                                                        {item?.code}
+                                                    </StyledText>
+                                                    <StyledText className="display-see-more-see-less"
+                                                        sx={{
+                                                            fontWeight: 600,
+                                                            textDecorationLine: "underline",
+                                                            color: theme.palette.secondary.main,
+                                                            display: "inline-block",
+                                                            cursor: "pointer",
+                                                            flexShrink: 0,
+                                                            fontSize: "85%",
+                                                            [theme.breakpoints.up("md")]: {
+                                                                ml: "20px",
+                                                                fontSize: "90%",
+                                                            },
+                                                            [theme.breakpoints.down("md")]: {
+                                                                ml: "8px",
+                                                                fontSize: "85%",
+                                                                display: "block",
+                                                            },
+                                                        }}
+                                                        onClick={() => showMoreData()}
+                                                    >
+                                                        {!showMore ? "See All" : "See Less"}
+                                                    </StyledText>
+                                                </Box>
+                                                {/* mobile screen-code */}
+
+                                                {showMore && (
+                                                    <Box sx={{ marginTop: '12px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                                                        <Box sx={{ display: 'flex', gap: '12px', alignItems: "center", width: "100%" }}>
+                                                            <Typography component={'span'} className="dark-text-typo">HCC code(s):</Typography>
+                                                            <Box sx={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                                                                <StyleCode className="stylecode-button insight-col-hcc-code-stylecode"
+                                                                    sx={{
+                                                                        ml: 0.5,
+                                                                        maxWidth: "100%",
+                                                                        textOverflow: "ellipsis",
+                                                                        [theme.breakpoints.only("md")]: {
+                                                                            mr: 2,
+                                                                        },
+
+                                                                        [theme.breakpoints.up("md")]: {
+                                                                            mr: 2,
+
+                                                                        },
+                                                                    }}
+                                                                >
+                                                                    <Tooltip title={item?.info?.[0][0][1]}>{item?.info?.[0][0][0]}</Tooltip>
+
+                                                                </StyleCode>
+
+                                                                <StyleCode className="stylecode-button"
+                                                                    sx={{
+                                                                        ml: 0.5,
+                                                                        maxWidth: "100%",
+                                                                        textOverflow: "ellipsis",
+                                                                        [theme.breakpoints.only("md")]: {
+                                                                            mr: 2,
+                                                                        },
+
+                                                                        [theme.breakpoints.up("md")]: {
+                                                                            mr: 2,
+
+                                                                        },
+                                                                    }}
+                                                                >
+                                                                    <Tooltip title={item?.info?.[0][0][1]}>+1</Tooltip>
+
+                                                                </StyleCode>
+                                                            </Box>
+                                                        </Box>
+                                                        <Box sx={{ display: 'flex', gap: '12px', alignItems: "center", width: "100%" }}>
+                                                            <Typography className="dark-text-typo">HCC:</Typography>
+                                                            <StyleCode2 className="insight-col-hcc-stylecode"
+                                                                sx={{
+                                                                    verticalAlign: "top",
+                                                                    ml: 0,
+                                                                    maxWidth: "100%",
+                                                                    textOverflow: "ellipsis",
+                                                                    overflow: "hidden",
+                                                                    color: "black !important",
+                                                                    padding: '0px',
+                                                                }}
+                                                            >
+
+                                                                {item?.info?.[1]}
+                                                            </StyleCode2>
+                                                        </Box>
+                                                        <Box sx={{ display: 'flex', gap: '12px', alignItems: "center", width: "100%" }}>
+                                                            <Typography className="dark-text-typo">Received on:</Typography>
+                                                            <StyleCode2 className="recived-stylecode"
+                                                                sx={{
+                                                                    color: "black !important",
+                                                                    verticalAlign: "top",
+                                                                    ml: 0,
+                                                                    maxWidth: "100%",
+                                                                    textOverflow: "ellipsis",
+                                                                    overflow: "hidden",
+                                                                    padding: '0',
+                                                                }}
+                                                            >
+
+                                                                {item?.info?.[3]}
+
+                                                            </StyleCode2>
+                                                        </Box>
+                                                    </Box>
+                                                )}
+
 
                                             </Box>
 
@@ -266,10 +463,34 @@ export const MorData = ({ sessionObject }) => {
 
 
                                         {/* Content - HCC Code */}
-                                        <Grid item className="mor_insight_data insight-col-hcc-code" sx={{ display: "flex" }}>
+                                        <Grid item className="mor_insight_data insight-col-hcc-code modile-display-none" sx={{ display: "flex" }}>
 
 
-                                            <StyleCode
+                                   {     item.info[0].slice(0,2).map((item)=>(
+                                            <StyleCode className="stylecode-button insight-col-hcc-code-stylecode"
+                                            sx={{
+                                                ml: 0.5,
+                                                maxWidth: "100%",
+                                                textOverflow: "ellipsis",
+                                                [theme.breakpoints.only("md")]: {
+                                                    mr: 2,
+                                                },
+
+                                                [theme.breakpoints.up("md")]: {
+                                                    mr: 2,
+
+                                                },
+                                            }}
+                                        >
+                                            <Tooltip >{item?.[0]}</Tooltip>
+
+                                        </StyleCode>
+                                                
+
+                                        ))}
+
+                                          
+                                            {/* <StyleCode className="stylecode-button insight-col-hcc-code-stylecode"
                                                 sx={{
                                                     ml: 0.5,
                                                     maxWidth: "100%",
@@ -284,17 +505,48 @@ export const MorData = ({ sessionObject }) => {
                                                     },
                                                 }}
                                             >
-                                                <Tooltip title={item?.info?.[0][0][1]}>{item?.info?.[0][0][0]}</Tooltip>
+                                                <Tooltip title={item?.info?.[0][0][1]}>{item?.info?.[0][1][0]}</Tooltip>
 
-                                            </StyleCode>
+                                            </StyleCode> */}
+
+
+
+                                            {item.info[0].slice(2).length > 0 && (
+                                            <StyleCode className="stylecode-button"
+                                                sx={{
+                                                    ml: 0.5,
+                                                    maxWidth: "100%",
+                                                    textOverflow: "ellipsis",
+                                                    [theme.breakpoints.only("md")]: {
+                                                        mr: 2,
+                                                    },
+
+                                                    [theme.breakpoints.up("md")]: {
+                                                        mr: 2,
+
+                                                    },
+                                                }}
+                                            >
+                                          
+                                                {console.log(item.info,'uyut6')}
+
+                                                <CustomTooltip 
+                                                    title={<div className={"abcd"}><TooltipComponent info={item.info} /></div>} 
+                                                >
+                                                    +{item.info[0].slice(2).length}
+                                                </CustomTooltip>
+                                                </StyleCode>
+                                                )}
+
+
 
 
                                         </Grid>
 
                                         {/* Content - Code */}
-                                        <Grid item className="mor_insight_data insight-col-hcc">
+                                        <Grid item className="mor_insight_data insight-col-hcc modile-display-none">
 
-                                            <StyleCode2
+                                            <StyleCode2 className="insight-col-hcc-stylecode"
                                                 sx={{
                                                     verticalAlign: "top",
                                                     ml: 0.5,
@@ -315,16 +567,16 @@ export const MorData = ({ sessionObject }) => {
                                                 }}
                                             >
 
-                                                {item?.info?.[1]}
+                                                {item?.info?.[1] || '-'}
                                             </StyleCode2>
 
                                         </Grid>
 
                                         {/* Content - RAF */}
-                                        {tabs && tabs["patient_dashboard_weights"]?.active && (
+                                        {tabs && tabs["patient_dashboard_mor_raf"]?.active && (
                                             <Grid item className="mor_insight_data insight-col-raf">
                                                 {tabs && tabs["patient_dashboard_weights"]?.active && (
-                                                    <StyledText
+                                                    <StyledText className="insight-col-raf-stylecode"
                                                         sx={{
                                                             color: "black !important",
                                                             [theme.breakpoints.only("xl")]: {
@@ -347,17 +599,17 @@ export const MorData = ({ sessionObject }) => {
 
                                                         }}
                                                     >
-                                                        {item?.info?.[2]}
+                                                        {item?.info?.[2] || '-'}
                                                     </StyledText>
                                                 )}
                                             </Grid>
                                         )}
 
-                                        {/* Content - Code */}
-                                        <Grid item className="mor_insight_data insight-col-recived">
-
-
-                                            <StyleCode2
+                                        {/* Content - received on */}
+                                        
+                                        {tabs && tabs["patient_dashboard_mor_recieved_on"]?.active && (
+                                            <Grid item className="mor_insight_data insight-col-recived modile-display-none">
+                                            <StyleCode2 className="recived-stylecode"
                                                 sx={{
                                                     color: "black !important",
                                                     verticalAlign: "top",
@@ -377,12 +629,13 @@ export const MorData = ({ sessionObject }) => {
                                                     },
                                                 }}
                                             >
-                                               
-                                                   { item?.info?.[3]}
-                                                
+
+                                                {item?.info?.[3] || '-'}
+
                                             </StyleCode2>
 
                                         </Grid>
+                                        )}
 
 
                                     </Grid>
@@ -651,6 +904,7 @@ export const MorData = ({ sessionObject }) => {
                             </Box>
                         );
                     })}
+
             </Box>
         </Box >
     );

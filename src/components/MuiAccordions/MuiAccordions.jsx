@@ -142,7 +142,7 @@ export const MuiAccordions = (props) => {
       expanded={panel ? expanded === panel : singleExpand}
       onChange={handleChange(panel || false)}
     >
-      <StyledAccordionSummary 
+        <StyledAccordionSummary 
   expandIcon={(item.codeCount === 0 || item.codeCount === undefined) ? null : expandIcon}
   sx={{ ...sx }} className="pdap-act-summary">
         {header}
