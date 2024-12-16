@@ -422,9 +422,15 @@ color: red !important;}
     display: none !important;
     }
 
+    .show-mobile-table-data{
+      display: none;
+    }
   @media (max-width:600px) {
     .insight-col-decs{
       width: 85%;
+      }
+      .show-mobile-table-data{
+        display: flex;
       }
       .insight-col-raf{
         width: 12%;

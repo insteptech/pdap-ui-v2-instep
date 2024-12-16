@@ -25,7 +25,7 @@ import {
 } from "../Common/StyledMuiComponents";
 import { Button } from "bootstrap";
 
-export const MorData = ({ sessionObject }) => {
+export const MorData = ({ sessionObject, windowSize }) => {
 
     const dispatch = useDispatch();
     const theme = useTheme();
@@ -40,11 +40,13 @@ export const MorData = ({ sessionObject }) => {
     const [sessionObjLoaded, setSessionObjLoaded] = useState(false);
     const [rejectDeletedCodes, setRejectDeletedCodes] = useState([]);
     const state = useSelector((state) => state.user.data.MorDataInsight);
-    const [showMore, setShowMore] = useState(false)
+    const [showMore, setShowMore] = useState(false);
+    const [dynamicCount, setDynamicCount] = useState(2);
 
     useEffect(() => {
         dispatch(MorDataInsight());
     }, []);
+
 
     const result =
         state &&
@@ -131,6 +133,8 @@ export const MorData = ({ sessionObject }) => {
     };
 
     const handleIsCollapse = (data) => {
+
+        setShowMore(true);
         let code = data?.value;
         let changeData = morInsightData?.map((value) => {
             const isValid = value?.info?.alternate_codes?.find(
@@ -145,8 +149,10 @@ export const MorData = ({ sessionObject }) => {
         setDeletedCondition(changeData);
     };
    
-    const showMoreData = (index) => {
+    const showMoreData = (index, value) => {
         // Update collapse state based on index
+
+        setShowMore(value);
         const changeData = morInsightData?.map((value, idx) => {
           return idx === index 
             ? { ...value, collapse: !value?.collapse } 
@@ -197,6 +203,9 @@ export const MorData = ({ sessionObject }) => {
                                 mr: 2,
 
                             },
+                            [theme.breakpoints.up("sm")]: {
+                                mr: 2,
+                            },
                         }}
                     >
                         <Tooltip >{key[0]}</Tooltip>
@@ -228,11 +237,11 @@ export const MorData = ({ sessionObject }) => {
                     </StyleCode> */}
                       
                     {/* <Typography sx={{ color: '#000', }} component={'p'}>{info?.[0][0]}</Typography> */}
-                
 
             </div>
         );
     };
+
     return (
         <Box className="ContentBox">
             {/* Header for accordion body */}
@@ -259,13 +268,27 @@ export const MorData = ({ sessionObject }) => {
                                         Description
                                     </StyledText>
 
-                                    <StyledText className="mor_insight_data insight-col-hcc-code more-table-sm-none ">
+                                    {
+                                    
+                                    tabs && tabs["patient_dashboard_mor_hcc_codes"]?.active && 
+                                    (
+                                        <StyledText className="mor_insight_data insight-col-hcc-code more-table-sm-none ">
                                         HCC Code(s)
                                     </StyledText>
+                                    )
+                                    }
 
-                                    <StyledText className="mor_insight_data insight-col-hcc  more-table-sm-none stylecode-left-border">
+                                  
+                                    {
+                                    
+                                    tabs && tabs["patient_dashboard_mor_hcc_category"]?.active && 
+                                    (
+                                        <StyledText className="mor_insight_data insight-col-hcc  more-table-sm-none stylecode-left-border">
                                         HCC
                                     </StyledText>
+                                    )
+                                    }
+                                 
 
                                     {tabs && tabs["patient_dashboard_mor_raf"]?.active && (
                                         <StyledText className="mor_insight_data  insight-col-raf stylecode-left-border">
@@ -317,16 +340,8 @@ export const MorData = ({ sessionObject }) => {
                                         }} item className="mor_insight_data insight-col-decs">
 
                                             <Box
-                                                // sx={{
-                                                //     [theme.breakpoints.only("lg")]: {
-                                                //         width: "50%",
-                                                //     },
 
-                                                //     [theme.breakpoints.only("md")]: {
-                                                //         width: "95%",
-                                                //     },
-                                                //     width: "90%",
-                                                // }}
+                        
                                                 className="acc-content-body-desc"
                                             >
                                                 <Box sx={{
@@ -377,16 +392,16 @@ export const MorData = ({ sessionObject }) => {
                                                                 display: "block",
                                                             },
                                                         }}
-                                                        onClick={() => showMoreData(index)}
+                                                        onClick={() => showMoreData(index, true)}
                                                     >
-                                                        {!item?.collapse ? "See All" : ""}
+                                                        {(!item?.collapse && !showMore) ? "See All" : ""}
                                                     </StyledText>
                                                 </Box>
                                                 {/* mobile screen-code */}
 
-                                                {item?.collapse && (
-                                                    <Box sx={{ marginTop: '12px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                                                        <Box sx={{ display: 'flex', gap: '12px', alignItems: "center", width: "100%" }}>
+                                                {(item?.collapse && showMore) && (
+                                                    <Box sx={{ marginTop: '12px', flexDirection: 'column', gap: '8px' }} className="show-mobile-table-data">
+                                                        {tabs && tabs['patient_dashboard_mor_hcc_codes'] && <Box sx={{ display: 'flex', gap: '12px', alignItems: "center", width: "100%" }}>
                                                             <Typography component={'span'} className="dark-text-typo">HCC code(s):</Typography>
                                                             <Box sx={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                                                                 <StyleCode className="stylecode-button insight-col-hcc-code-stylecode"
@@ -408,6 +423,25 @@ export const MorData = ({ sessionObject }) => {
 
                                                                 </StyleCode>
 
+                                                                <StyleCode className="stylecode-button insight-col-hcc-code-stylecode"
+                                                                    sx={{
+                                                                        ml: 0.5,
+                                                                        maxWidth: "100%",
+                                                                        textOverflow: "ellipsis",
+                                                                        [theme.breakpoints.only("md")]: {
+                                                                            mr: 2,
+                                                                        },
+
+                                                                        [theme.breakpoints.up("md")]: {
+                                                                            mr: 2,
+
+                                                                        },
+                                                                    }}
+                                                                >
+                                                                    <Tooltip title={item?.info?.[0][1][1]}>{item?.info?.[0][1][0]}</Tooltip>
+
+                                                                </StyleCode>
+
                                                                 <StyleCode className="stylecode-button"
                                                                     sx={{
                                                                         ml: 0.5,
@@ -423,12 +457,18 @@ export const MorData = ({ sessionObject }) => {
                                                                         },
                                                                     }}
                                                                 >
-                                                                    <Tooltip title={item?.info?.[0][0][1]}>+1</Tooltip>
+                                                                   <CustomTooltip 
+                                                    title={<div className={"abcd"}><TooltipComponent info={item.info} /></div>} 
+                                                >
+                                                    +{windowSize.width >1200 ? item.info[0].slice(2).length:
+                                                    item.info[0].slice(1).length}
+                                                    
+                                                </CustomTooltip>
 
                                                                 </StyleCode>
                                                             </Box>
-                                                        </Box>
-                                                        <Box sx={{ display: 'flex', gap: '12px', alignItems: "center", width: "100%" }}>
+                                                        </Box>}
+                                                       { tabs && tabs['patient_dashboard_mor_hcc_category'] && <Box sx={{ display: 'flex', gap: '12px', alignItems: "center", width: "100%" }}>
                                                             <Typography className="dark-text-typo">HCC:</Typography>
                                                             <StyleCode2 className="insight-col-hcc-stylecode"
                                                                 sx={{
@@ -444,7 +484,7 @@ export const MorData = ({ sessionObject }) => {
 
                                                                 {item?.info?.[1]}
                                                             </StyleCode2>
-                                                        </Box>
+                                                        </Box>}
                                                         <Box sx={{ display: 'flex', gap: '12px', alignItems: "center", width: "100%" }}>
                                                             <Typography className="dark-text-typo">Received on:</Typography>
                                                             <StyleCode2 className="recived-stylecode"
@@ -485,7 +525,7 @@ export const MorData = ({ sessionObject }) => {
                                                                 display: "block",
                                                             },
                                                         }}
-                                                        onClick={() => showMoreData(index)}
+                                                        onClick={() => showMoreData(index , false)}
                                                     >
                                                         {"See Less"}
                                                     </StyledText>
@@ -499,7 +539,10 @@ export const MorData = ({ sessionObject }) => {
 
 
                                         {/* Content - HCC Code */}
-                                        <Grid item className="mor_insight_data insight-col-hcc-code modile-display-none" sx={{ display: "flex" }}>
+                                      { 
+                                    
+                                    tabs && tabs["patient_dashboard_mor_hcc_codes"]?.active && 
+                                     <Grid item className="mor_insight_data insight-col-hcc-code modile-display-none" sx={{ display: "flex" }}>
 
 
                                    {     item.info[0].slice(0,2).map((item)=>(
@@ -567,7 +610,8 @@ export const MorData = ({ sessionObject }) => {
                                                 <CustomTooltip 
                                                     title={<div className={"abcd"}><TooltipComponent info={item.info} /></div>} 
                                                 >
-                                                    +{item.info[0].slice(2).length}
+                                                    +{windowSize.width >1200 ? item.info[0].slice(2).length:
+                                                    item.info[0].slice(1).length}
                                                 </CustomTooltip>
                                                 </StyleCode>
                                                 )}
@@ -575,10 +619,17 @@ export const MorData = ({ sessionObject }) => {
 
 
 
-                                        </Grid>
+                                        </Grid>}
 
                                         {/* Content - Code */}
-                                        <Grid item className="mor_insight_data insight-col-hcc modile-display-none">
+
+
+                                    {   
+                                    
+                                    
+                                        tabs && tabs["patient_dashboard_mor_hcc_category"]?.active && 
+                                    
+                                    <Grid item className="mor_insight_data insight-col-hcc modile-display-none">
 
                                             <StyleCode2 className="insight-col-hcc-stylecode"
                                                 sx={{
@@ -604,7 +655,7 @@ export const MorData = ({ sessionObject }) => {
                                                 {item?.info?.[1] || '-'}
                                             </StyleCode2>
 
-                                        </Grid>
+                                        </Grid>}
 
                                         {/* Content - RAF */}
                                         {tabs && tabs["patient_dashboard_mor_raf"]?.active && (
