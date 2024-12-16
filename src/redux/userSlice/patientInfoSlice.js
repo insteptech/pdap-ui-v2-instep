@@ -263,6 +263,7 @@ export const patientHistory = createAsyncThunk("patientHistory", async () => {
 
 // for patient history
 export const MorDataInsight = createAsyncThunk("MorDataInsight", async () => {
+    // this need to be delete after we get response from BE
     let dummyData = 
     {
         "Protein-Calorie Malnutrition": [
