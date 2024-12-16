@@ -861,7 +861,7 @@ export const Codes = () => {
     const morDataItem = {
       key: 8,
       code: "Mor Data Insight",
-      codeCount: summary?.mor_condition_count || 1,
+      codeCount: summary?.mor_condition_count,
       container: <MorData windowSize={windowSize} sessionObject={sessionObject} handleAddEventData={handleAddEventData} />,
     };
     codesData.splice(5, 0, morDataItem); // Add at position 6 (after key 5)

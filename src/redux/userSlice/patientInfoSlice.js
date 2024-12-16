@@ -264,80 +264,80 @@ export const patientHistory = createAsyncThunk("patientHistory", async () => {
 // for patient history
 export const MorDataInsight = createAsyncThunk("MorDataInsight", async () => {
     // this need to be delete after we get response from BE
-    let dummyData = 
-    {
-        "Protein-Calorie Malnutrition": [
-          [
-            [
-              "E11.2",
-              "this is a long description. this is a long description. this is a long description."
-            ],
-            [
-              "E12.2",
-              "this is a long description. this is a long description. this is a long description."
-            ]
-          ],
-          "V22",
-          "1.12",
-          "09-15-2025"
-        ],
-        "Congestive Heart Failure.": [
-          [
-            [
-              "E11.1",
-              "this is a long description. this is a long description. this is a long description."
-            ],
-            [
-              "E12.2",
-              "this is a long description. this is a long description. this is a long description."
-            ],
-            [
-              "E12.3",
-              "this is a long description. this is a long description. this is a long description."
-            ]
-          ],
-          "V22",
-          "3.21",
-          "05-25-2025"
-        ],
-        "Major Depressive, Bipolar, and Paranoid Disorders.": [
-          [
-            [
-              "E11.1",
-              "this is a long description. this is a long description. this is a long description."
-            ],
-            [
-              "E12.2",
-              "this is a long description. this is a long description. this is a long description."
-            ],
-            [
-              "E12.3",
-              "this is a long description. this is a long description. this is a long description."
-            ],
-            [
-              "E12.3",
-              "this is a long description. this is a long description. this is a long description."
-            ]
-          ],
-          "V22",
-          "",
-          ""
-        ]
-    };
+    // let dummyData = 
+    // {
+    //     "Protein-Calorie Malnutrition": [
+    //       [
+    //         [
+    //           "E11.2",
+    //           "this is a long description. this is a long description. this is a long description."
+    //         ],
+    //         [
+    //           "E12.2",
+    //           "this is a long description. this is a long description. this is a long description."
+    //         ]
+    //       ],
+    //       "V22",
+    //       "1.12",
+    //       "09-15-2025"
+    //     ],
+    //     "Congestive Heart Failure.": [
+    //       [
+    //         [
+    //           "E11.1",
+    //           "this is a long description. this is a long description. this is a long description."
+    //         ],
+    //         [
+    //           "E12.2",
+    //           "this is a long description. this is a long description. this is a long description."
+    //         ],
+    //         [
+    //           "E12.3",
+    //           "this is a long description. this is a long description. this is a long description."
+    //         ]
+    //       ],
+    //       "V22",
+    //       "3.21",
+    //       "05-25-2025"
+    //     ],
+    //     "Major Depressive, Bipolar, and Paranoid Disorders.": [
+    //       [
+    //         [
+    //           "E11.1",
+    //           "this is a long description. this is a long description. this is a long description."
+    //         ],
+    //         [
+    //           "E12.2",
+    //           "this is a long description. this is a long description. this is a long description."
+    //         ],
+    //         [
+    //           "E12.3",
+    //           "this is a long description. this is a long description. this is a long description."
+    //         ],
+    //         [
+    //           "E12.3",
+    //           "this is a long description. this is a long description. this is a long description."
+    //         ]
+    //       ],
+    //       "V22",
+    //       "",
+    //       ""
+    //     ]
+    // };
 
     try {
         if (slug) {
             const data = await axios.get(`${baseUrl}/api/v1/patient-mor-data/?slug=${slug}`);
-            // return data.data;
-            return dummyData;
+            return data.data;
+            // return dummyData;
         }
 
         else if (token) {
             const data = await axios.get(`${baseUrl}/api/v1/patient-mor-data/`, 
                { headers: getApiHeaders()}
             );
-            // return data.data;
-            return dummyData;
+            return data.data;
+            // return dummyData;
         }
 
     } catch (error) {
