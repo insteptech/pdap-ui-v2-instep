@@ -80,7 +80,7 @@ export function postApiHeaders() {
   };
 }
 
-export function refreshTOken () {
+export function refreshToken () {
   if(lcjwt){
 
   }

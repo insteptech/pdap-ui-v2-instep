@@ -525,7 +525,6 @@ export const Codes = () => {
   const [currentURL, setCurrentURL] = useState("")
 
   const sendAuditLog = async () => {
-
     const payload = {
       event_type: "LAUNCH_SUCCESS",
       metadata: {
@@ -537,12 +536,16 @@ export const Codes = () => {
       }
     };
 
+    // Set current URL first
     setCurrentURL(window.location.href);
+  
+    // Wait for user data to be available
     await new Promise(resolve => setTimeout(resolve, 3000));
 
-    if (!currentURL.includes("/404")) {
+    // Only send if not on 404 page and we have user data
+    if (!currentURL.includes("/404") && user?.data?.userInfo?.mrn) {
       try {
-        await dispatch(fetchAuditLogs([payload]));
+        dispatch(fetchAuditLogs([payload]));
       } catch (error) {
         console.error("Failed to dispatch audit logs:", error);
       }
@@ -765,20 +768,15 @@ export const Codes = () => {
 
   const [loadingSummary, setLoadingSummary] = useState(true)
   useEffect(() => {
-    if (slug && tabData) {
+    if (slug && tabData && user?.data?.userInfo?.mrn) { // Add check for user data
       dispatch(patientSummary()).then(() => {
         setLoadingSummary(false)
+        sendAuditLog(); // Move sendAuditLog here after patient summary loads
       }).catch((error) => {
         setLoadingSummary(false)
       });
-      sendAuditLog();
-      const timer = setTimeout(() => {
-      }, 2000);
-
-      // Clean up the timeout if the component is unmounted before the timeout completes
-      return () => clearTimeout(timer);
     }
-  }, [tabData]);
+  }, [user?.data?.userInfo?.mrn]); // Add user data dependency
 
   useEffect(() => {
     setExistingRejectCode(() => objToArr(existingCodeReject));
