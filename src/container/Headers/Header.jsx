@@ -131,10 +131,8 @@ export const Header = ({ sessionObject }) => {
   const checkResp = async () => {
     if (!slug) {
       return navigate(`/404`);
-    } else {
-      dispatch(patientTabFlag()).then(() => {
-        setShowHeader(true);
-      });
+    } else {        
+      setShowHeader(true);
       let result = await dispatch(doctorInfo());
       if (result?.payload?.response?.status === 404) {
         return navigate(`/404`);

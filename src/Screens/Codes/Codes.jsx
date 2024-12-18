@@ -129,6 +129,10 @@ export const Codes = () => {
   const [combinedDatahoag, setCombinedDatahoag] = useState([]);
   const [combinedData2hoag, setCombinedData2hoag] = useState([]);
 
+  const {data} = useSelector((state)=> state);
+
+  console.log(useSelector((state)=> state) , "hjgfjasgfhdgshfgds");
+
   const sessionObject = JSON.parse(
     localStorage.getItem(`sessionObject_${userDetail?.mrn}`)
   );
@@ -894,56 +898,6 @@ export const Codes = () => {
     ];
   }
 
- 
-  //   {
-  //     key: 1,
-  //     code: "Existing conditions",
-  //     codeCount: summary?.existing_codes_count,
-  //     problemList: "Recapturing required",
-  //     container: <ExistingConditions sessionObject={sessionObject} handleAddEventData={handleAddEventData} />,
-  //   },
-  //   {
-  //     key: 2,
-  //     code: "Suspects",
-  //     codeCount: summary?.suspect_conditions_count,
-  //     problemList: "Review Potential diagnoses",
-  //     container: <Suspects sessionObject={sessionObject} handleAddEventData={handleAddEventData} />,
-  //   },
-  //   {
-  //     key: 3,
-  //     code: "Codes not in problem list",
-  //     codeCount: summary?.recapture_codes_count,
-  //     problemList: "Update Problem List",
-  //     container: <CodesNotList sessionObject={sessionObject} handleAddEventData={handleAddEventData} />,
-  //   },
-  //   {
-  //     key: 4,
-  //     code: "Addressed Codes",
-  //     codeCount: summary?.addressed_codes_count,
-  //     container: <AddressedCodes sessionObject={sessionObject} handleAddEventData={handleAddEventData} />,
-  //   },
-  //   {
-  //     key: 5,
-  //     code: "Additional diagnoses",
-  //     codeCount: summary?.duplicate_codes_count,
-  //     container: <DuplicateCodes sessionObject={sessionObject} handleAddEventData={handleAddEventData} />,
-  //   },
-  //   {
-  //     key: 7,
-  //     code: "External Data",
-  //     codeCount: summary?.external_data_count,
-  //     container: <Scans sessionObject={sessionObject} handleAddEventData={handleAddEventData} />,
-  //     isShow: tabs && tabs['patient_dashboard_extended_da']?.active || false,
-  //   },
-  //   {
-  //     key: 6,
-  //     code: "Deleted Codes / Conditions",
-  //     codeCount: summary?.deleted_codes_count,
-  //     container: <DeletedCodes sessionObject={sessionObject} handleAddEventData={handleAddEventData} />,
-  //   },
-  // ];
-
-
   const handleDelete = (event, item, key) => {
     event.stopPropagation()
     let newSessionObject = {};
@@ -1171,7 +1125,6 @@ export const Codes = () => {
     );
   };
 
-
   useEffect(() => {
     sessionHistory();
     setSumCount(
@@ -1200,7 +1153,6 @@ export const Codes = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const [expanded, setExpanded] = React.useState(false);
-  const [singleExpand, setSingleExpand] = React.useState(false);
   const [isLoadingMain, setIsLoadingMain] = useState(true);
 
   localStorage.setItem("setLoading", true);
@@ -1238,23 +1190,21 @@ export const Codes = () => {
       let baseValue;
 
       if (window.innerWidth < 375) {
-        baseValue = "9.2rem"; // Example for widths below 375px
+        baseValue = "9.2rem";
       } else if (window.innerWidth >= 375 && window.innerWidth < 549) {
-        baseValue = "10rem"; // Example for widths between 375px and 549px
+        baseValue = "10rem"; 
       } else {
-        baseValue = "10rem"; // Example for widths 549px and above
+        baseValue = "10rem"; 
       }
 
-      // Check if either tab is active and add 30px
       if (tabs?.read_only_rejection_allowed?.active || tabs?.read_only_mode?.active) {
-        // Convert baseValue to pixels, add 30px, and set as the new topValue
-        const baseValueInPx = parseFloat(baseValue) * 16; // Convert rem to px (1rem = 16px)
-        setTopValue(`${(baseValueInPx + 36) / 16}rem`); // Convert back to rem
+        const baseValueInPx = parseFloat(baseValue) * 16; 
+        setTopValue(`${(baseValueInPx + 36) / 16}rem`); 
       }
       else if ((tabs && tabs?.patient_dashboard_recapture_percentage?.active && tabs?.patient_dashboard_suspect_percentage?.active) || doctorDetail?.doctor_name) {
-        const baseValueInPx = parseFloat(baseValue) * 16; // Convert rem to px (1rem = 16px)
+        const baseValueInPx = parseFloat(baseValue) * 16;
         if (window.innerWidth < 549) {
-          setTopValue(`${(baseValueInPx + 66) / 16}rem`); // Convert back to rem
+          setTopValue(`${(baseValueInPx + 66) / 16}rem`);
         }
         else {
           setTopValue(baseValue);
@@ -1265,11 +1215,9 @@ export const Codes = () => {
       }
     };
 
-    // Set initial value and add resize event listener
     handleResize();
     window.addEventListener("resize", handleResize);
 
-    // Clean up event listener on component unmount
     return () => window.removeEventListener("resize", handleResize);
   }, [tabs]);
 
@@ -1538,8 +1486,6 @@ export const Codes = () => {
                   },
                 }}>
                   <React.Fragment>
-
-
                     <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                       <Grid item
                         onClick={() => handleShow()}
@@ -1555,8 +1501,6 @@ export const Codes = () => {
                         <StyledText className="pendingActions"
                           sx={{ ...flexCenter, gap: "4px" }}
                           type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop"
-
-
                         >
                           Pending actions
                           <Box
@@ -2620,6 +2564,7 @@ export const Codes = () => {
                     setExpanded={setExpanded}
                     expanded={expanded}
                     key={item?.key}
+                    
                     sx={{
                       background:
                         expanded === item?.key
