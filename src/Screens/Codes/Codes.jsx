@@ -132,10 +132,6 @@ export const Codes = () => {
   const [combinedDatahoag, setCombinedDatahoag] = useState([]);
   const [combinedData2hoag, setCombinedData2hoag] = useState([]);
 
-  const {data} = useSelector((state)=> state);
-
-  console.log(useSelector((state)=> state) , "hjgfjasgfhdgshfgds");
-
   const sessionObject = JSON.parse(
     localStorage.getItem(`sessionObject_${userDetail?.mrn}`)
   );
@@ -1296,6 +1292,7 @@ export const Codes = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const [expanded, setExpanded] = React.useState(false);
+  const [singleExpand, setSingleExpand] = React.useState(false);
   const [isLoadingMain, setIsLoadingMain] = useState(true);
 
   localStorage.setItem("setLoading", true);
@@ -1332,19 +1329,13 @@ export const Codes = () => {
       let baseValue;
 
       if (window.innerWidth < 375) {
-        baseValue = "9.2rem";
+        baseValue = "9.2rem"; // Example for widths below 375px
       } else if (window.innerWidth >= 375 && window.innerWidth < 549) {
-        baseValue = "10rem"; 
+        baseValue = "10rem"; // Example for widths between 375px and 549px
       } else {
-        baseValue = "10rem"; 
+        baseValue = "10rem"; // Example for widths 549px and above
       }
 
-      if (tabs?.read_only_rejection_allowed?.active || tabs?.read_only_mode?.active) {
-        const baseValueInPx = parseFloat(baseValue) * 16; 
-        setTopValue(`${(baseValueInPx + 36) / 16}rem`); 
-      }
-      else if ((tabs && tabs?.patient_dashboard_recapture_percentage?.active && tabs?.patient_dashboard_suspect_percentage?.active) || doctorDetail?.doctor_name) {
-        const baseValueInPx = parseFloat(baseValue) * 16;
       // Check if either tab is active and add 30px
       if (
         tabs?.read_only_rejection_allowed?.active ||
@@ -1361,9 +1352,8 @@ export const Codes = () => {
       ) {
         const baseValueInPx = parseFloat(baseValue) * 16; // Convert rem to px (1rem = 16px)
         if (window.innerWidth < 549) {
-          setTopValue(`${(baseValueInPx + 66) / 16}rem`);
-        }
-        else {
+          setTopValue(`${(baseValueInPx + 66) / 16}rem`); // Convert back to rem
+        } else {
           setTopValue(baseValue);
         }
       } else {
@@ -1371,9 +1361,11 @@ export const Codes = () => {
       }
     };
 
+    // Set initial value and add resize event listener
     handleResize();
     window.addEventListener("resize", handleResize);
 
+    // Clean up event listener on component unmount
     return () => window.removeEventListener("resize", handleResize);
   }, [tabs]);
 
@@ -1643,8 +1635,13 @@ export const Codes = () => {
                   }}
                 >
                   <React.Fragment>
-                    <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                      <Grid item
+                    <Grid
+                      container
+                      rowSpacing={1}
+                      columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                    >
+                      <Grid
+                        item
                         onClick={() => handleShow()}
                         type="button"
                         data-bs-toggle="offcanvas"
@@ -1667,7 +1664,10 @@ export const Codes = () => {
                         <StyledText
                           className="pendingActions"
                           sx={{ ...flexCenter, gap: "4px" }}
-                          type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop"
+                          type="button"
+                          data-bs-toggle="offcanvas"
+                          data-bs-target="#offcanvasTop"
+                          aria-controls="offcanvasTop"
                         >
                           Pending actions
                           <Box
@@ -2943,165 +2943,169 @@ export const Codes = () => {
           <Grid container spacing={2.5}>
             <Grid item xs={12} lg={9} md={8} sx={{ marginTop: "20px" }}>
               <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-                {!isModalSubmit && codesData?.map((item, i) => (
-                  <MuiAccordions
-                    item={item}
-                    summary={summary}
-                    handleAddEventData={handleAddEventData}
-                    tabs={tabs}
-                    panel={item?.key}
-                    name={item?.code}
-                    setExpanded={setExpanded}
-                    expanded={expanded}
-                    key={item?.key}
-                    
-                    sx={{
-                      background:
-                        expanded === item?.key
-                          ? theme.palette.black.main
-                          : "white",
-                      color:
-                        expanded === item?.key
-                          ? "white"
-                          : theme.palette.black.main,
-                      borderBottomLeftRadius: expanded === item.key && 0,
-                      borderBottomRightRadius: expanded === item.key && 0,
-                    }}
-                    expandIcon={
-                      <ArrowDropDownIcon
-                        width={12}
-                        height={12}
-                        fill={
+                {!isModalSubmit &&
+                  codesData?.map((item, i) => (
+                    <MuiAccordions
+                      item={item}
+                      summary={summary}
+                      handleAddEventData={handleAddEventData}
+                      tabs={tabs}
+                      panel={item?.key}
+                      name={item?.code}
+                      setExpanded={setExpanded}
+                      expanded={expanded}
+                      key={item?.key}
+                      sx={{
+                        background:
+                          expanded === item?.key
+                            ? theme.palette.black.main
+                            : "white",
+                        color:
                           expanded === item?.key
                             ? "white"
-                            : theme.palette.secondary.A400
-                        }
-                      />
-                    }
-                    header={
-                      <>
-                        <Grid
-                          container
-                          className="codes-act-header-container"
-                        >
+                            : theme.palette.black.main,
+                        borderBottomLeftRadius: expanded === item.key && 0,
+                        borderBottomRightRadius: expanded === item.key && 0,
+                      }}
+                      expandIcon={
+                        <ArrowDropDownIcon
+                          width={12}
+                          height={12}
+                          fill={
+                            expanded === item?.key
+                              ? "white"
+                              : theme.palette.secondary.A400
+                          }
+                        />
+                      }
+                      header={
+                        <>
                           <Grid
-                            item
-                            xs={7}
-                            sm={7}
-                            md={6}
-                            lg={4}
-                            xl={4}
-                            className="codes-act-header"
+                            container
+                            className="codes-act-header-container"
                           >
-                            <StyledText
-                              sx={{
-                                ...flexCenter,
-                                gap: 0.5,
-                                fontWeight: 500,
-                                fontSize: "18px",
-                              }}
-                              className="codes-act-header-title"
+                            <Grid
+                              item
+                              xs={7}
+                              sm={7}
+                              md={6}
+                              lg={4}
+                              xl={4}
+                              className="codes-act-header"
                             >
-                              {item?.code}
-                              <Box
-                                sx={{
-                                  background:
-                                    expanded === item.key
-                                      ? "#FFFFFF"
-                                      : "#3D4A8F",
-                                  color:
-                                    expanded === item.key
-                                      ? "#3D4A8F"
-                                      : "#FFFFFF",
-                                  borderRadius: "100%",
-                                  height: "1.3125rem",
-                                  width: "1.3125rem",
-                                  ...flexCenter,
-                                  justifyContent: "center",
-                                  [theme.breakpoints.only("xs")]: {
-                                    m: 0,
-                                  },
-                                  ml: 1,
-                                }}
-                                className="codes-act-header-count-wrap"
-                              >
-                                <Typography
-                                  variant="body2"
-                                  sx={{
-                                    textAlign: "center",
-                                    fontWeight: 600,
-                                    fontSize: "0.75rem",
-                                    lineHeight: "0.914rem",
-                                    display: "flex",
-                                    justifyContent: "center",
-                                    alignItems: "center"
-                                  }}
-                                  className="codes-act-header-count-text"
-                                >
-                                  {!loadingSummary ? (item?.codeCount || 0) : <ClipLoader color="#ffffff" size={15} />}
-                                </Typography>
-                              </Box>
-                            </StyledText>
-                          </Grid>
-                          <Grid
-                            item
-                            xs={5}
-                            sm={5}
-                            md={6}
-                            lg={8}
-                            xl={8}
-                            sx={{
-
-                              [theme.breakpoints.up("xl")]: {
-                                pl: 8,
-                              },
-                              [theme.breakpoints.up("md")]: {
-                                pl: 6,
-                              },
-                            }}
-                            className="codes-act-header-plist-wrap"
-                          >
-                            {item.problemList && (
                               <StyledText
                                 sx={{
                                   ...flexCenter,
                                   gap: 0.5,
-                                  fontWeight: 400,
-                                  fontSize: "16px",
-                                  marginRight: 4,
-                                  [theme.breakpoints.down("md")]: {
-                                    py: 1,
-                                  },
+                                  fontWeight: 500,
+                                  fontSize: "18px",
                                 }}
-                                className="codes-act-header-plist-wrap1"
+                                className="codes-act-header-title"
                               >
+                                {item?.code}
                                 <Box
                                   sx={{
+                                    background:
+                                      expanded === item.key
+                                        ? "#FFFFFF"
+                                        : "#3D4A8F",
+                                    color:
+                                      expanded === item.key
+                                        ? "#3D4A8F"
+                                        : "#FFFFFF",
+                                    borderRadius: "100%",
+                                    height: "1.3125rem",
+                                    width: "1.3125rem",
                                     ...flexCenter,
                                     justifyContent: "center",
+                                    [theme.breakpoints.only("xs")]: {
+                                      m: 0,
+                                    },
+                                    ml: 1,
                                   }}
-                                  className="codes-act-header-plist-box"
+                                  className="codes-act-header-count-wrap"
                                 >
-                                  <WarningIcon
-                                    width="1.3125rem"
-                                    height="1.3125rem"
-                                    fill={
-                                      expanded === item.key ? "white" : "red"
-                                    }
-                                    className="codes-act-header-plist-icon"
-                                  />
+                                  <Typography
+                                    variant="body2"
+                                    sx={{
+                                      textAlign: "center",
+                                      fontWeight: 600,
+                                      fontSize: "0.75rem",
+                                      lineHeight: "0.914rem",
+                                      display: "flex",
+                                      justifyContent: "center",
+                                      alignItems: "center",
+                                    }}
+                                    className="codes-act-header-count-text"
+                                  >
+                                    {!loadingSummary ? (
+                                      item?.codeCount || 0
+                                    ) : (
+                                      <ClipLoader color="#ffffff" size={15} />
+                                    )}
+                                  </Typography>
                                 </Box>
-                                {item.problemList}
                               </StyledText>
-                            )}
+                            </Grid>
+                            <Grid
+                              item
+                              xs={5}
+                              sm={5}
+                              md={6}
+                              lg={8}
+                              xl={8}
+                              sx={{
+                                [theme.breakpoints.up("xl")]: {
+                                  pl: 8,
+                                },
+                                [theme.breakpoints.up("md")]: {
+                                  pl: 6,
+                                },
+                              }}
+                              className="codes-act-header-plist-wrap"
+                            >
+                              {item.problemList && (
+                                <StyledText
+                                  sx={{
+                                    ...flexCenter,
+                                    gap: 0.5,
+                                    fontWeight: 400,
+                                    fontSize: "16px",
+                                    marginRight: 4,
+                                    [theme.breakpoints.down("md")]: {
+                                      py: 1,
+                                    },
+                                  }}
+                                  className="codes-act-header-plist-wrap1"
+                                >
+                                  <Box
+                                    sx={{
+                                      ...flexCenter,
+                                      justifyContent: "center",
+                                    }}
+                                    className="codes-act-header-plist-box"
+                                  >
+                                    <WarningIcon
+                                      width="1.3125rem"
+                                      height="1.3125rem"
+                                      fill={
+                                        expanded === item.key ? "white" : "red"
+                                      }
+                                      className="codes-act-header-plist-icon"
+                                    />
+                                  </Box>
+                                  {item.problemList}
+                                </StyledText>
+                              )}
+                            </Grid>
                           </Grid>
-                        </Grid>
-                      </>
-                    }
-                  >
-                    {item.isShow}{item.container}
-                  </MuiAccordions>
-                ))}
+                        </>
+                      }
+                    >
+                      {item.isShow}
+                      {item.container}
+                    </MuiAccordions>
+                  ))}
 
                 {isModalSubmit && (
                   <Container sx={{ height: "80vh" }}></Container>
