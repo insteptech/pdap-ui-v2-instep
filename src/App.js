@@ -35,6 +35,8 @@ const App = () => {
               wss://*.pdap.doctustech.com 
               https://*.pdap.doctustech.com 
               wss://dev-app-v2.pdap.doctustech.com:3000; 
+              *.doctustech.com;
+              
             script-src 'self' 'unsafe-inline';
             style-src 'self' 'unsafe-inline';
             img-src 
@@ -43,11 +45,13 @@ const App = () => {
               ${process.env.REACT_APP_IMG_URL} 
               wss://*.pdap.doctustech.com 
               https://*.pdap.doctustech.com;
+              *.doctustech.com;
             font-src 
               'self' 
               ${process.env.REACT_APP_FONT_URL} 
               wss://*.pdap.doctustech.com 
               https://*.pdap.doctustech.com;
+              *.doctustech.com;
             frame-src 'self';
             object-src 'none';
             media-src 'self';

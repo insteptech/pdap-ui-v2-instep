@@ -43,6 +43,14 @@ export const MuiAccordions = (props) => {
 
   const { doctorDetail } = useSelector((state) => state?.doctor?.data);
   const { user } = useSelector((state) => state);
+  const {
+    existingCondition,
+    suspectedCode,
+    recaptureCode,
+    addressCode,
+    duplicateCode,
+    deletedCodes,
+    } = useSelector((state)=> state?.user?.data);
 
   const exampleMetadata1 = {
     event_type: "EXISTING_CONDITION_EXPAND",
@@ -88,7 +96,31 @@ export const MuiAccordions = (props) => {
     }
   }
 
+  const getPanelNumber = (panelNumber = null) => {
+    // Variables to check
+    const codeList = {
+      1: existingCondition,
+      2: suspectedCode,
+      3: recaptureCode,
+      4: addressCode,
+      5: duplicateCode,
+      6: deletedCodes
+    };
+  
+    if (panelNumber !== null) {
+      const variable = codeList[panelNumber];
+      if (variable && Object.keys(variable).length) {
+        return true; // Variable is not empty
+      }
+      return false;
+    }
+  };
+
   const handleChange = (panel) => (_, isExpanded) => {
+
+    if(getPanelNumber(panel) === false){
+      return;
+    }
 
     if ((item?.key === panel && item?.codeCount === 0) || item?.key === panel && item?.codeCount === undefined) {
       return
@@ -135,6 +167,13 @@ export const MuiAccordions = (props) => {
       handleAddEventData(data);
     }
   }
+
+ 
+  
+
+  console.log(panel , "dfdsjfhdsjgd")
+
+   
 
   return (
     <Accordion
