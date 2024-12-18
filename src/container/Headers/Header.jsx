@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState, useRef } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -159,10 +158,7 @@ export const Header = ({ sessionObject }) => {
 
   return (
     <>
-      <Box
-      className="header"
-      sx={{backgroundColor:"white"}}
-      >
+      <Box className="header" sx={{ backgroundColor: "white" }}>
         <AppBar
           position="static"
           sx={{
@@ -183,9 +179,16 @@ export const Header = ({ sessionObject }) => {
           >
             <>
               <Grid container className="header__container" spacing={{ md: 2 }}>
-                <Grid className="header__container_child1" item xs={12} md={5} sm={12} sx={{
-                  alignItems: "center",
-                }} >
+                <Grid
+                  className="header__container_child1"
+                  item
+                  xs={12}
+                  md={5}
+                  sm={12}
+                  sx={{
+                    alignItems: "center",
+                  }}
+                >
                   <Box
                     sx={{
                       display: "flex",
@@ -193,11 +196,6 @@ export const Header = ({ sessionObject }) => {
                       gap: { xs: 3, md: 7, lg: 5 },
                       height: "3.75rem",
                       width: "100%",
-                      [theme.breakpoints.down("sm")]: {
-                        justifyContent: "space-between",
-                      },
-
-
                     }}
                   >
                     <StyleLogo
@@ -213,41 +211,41 @@ export const Header = ({ sessionObject }) => {
                         routes?.map((item, i) => {
                           return item.name === "History" ? (
                             tabs &&
-                            tabs["patient_dashboard_history_tab"]?.active && (
-                              <Box
-                                key={i}
-                                onClick={() => {
-                                  getActiveTab(i);
-                                  navigate(item.path);
-                                }}
-                                sx={
-                                  value === i
-                                    ? {
-                                      ...activeBorder,
-                                      borderColor: "#E6682D",
-                                    }
-                                    : {
-                                      ...activeBorder,
-                                      borderColor: "transparent",
-                                    }
-                                }
-                              >
-                                <StyleTabText
-                                  label={item?.name}
+                              tabs["patient_dashboard_history_tab"]?.active && (
+                                <Box
+                                  key={i}
+                                  onClick={() => {
+                                    getActiveTab(i);
+                                    navigate(item.path);
+                                  }}
                                   sx={
                                     value === i
                                       ? {
-                                        ...tabStyle?.active_tab,
-                                      }
+                                          ...activeBorder,
+                                          borderColor: "#E6682D",
+                                        }
                                       : {
-                                        ...tabStyle.default_tab,
-                                      }
+                                          ...activeBorder,
+                                          borderColor: "transparent",
+                                        }
                                   }
                                 >
-                                  {item?.name}
-                                </StyleTabText>
-                              </Box>
-                            )
+                                  <StyleTabText
+                                    label={item?.name}
+                                    sx={
+                                      value === i
+                                        ? {
+                                            ...tabStyle?.active_tab,
+                                          }
+                                        : {
+                                            ...tabStyle.default_tab,
+                                          }
+                                    }
+                                  >
+                                    {item?.name}
+                                  </StyleTabText>
+                                </Box>
+                              )
                           ) : item.name === "My Profile" ? (
                             tabs &&
                             tabs["patient_dashboard_view_profile"]?.active && (
@@ -260,13 +258,13 @@ export const Header = ({ sessionObject }) => {
                                 sx={
                                   value === i
                                     ? {
-                                      ...activeBorder,
-                                      borderColor: "#E6682D",
-                                    }
+                                        ...activeBorder,
+                                        borderColor: "#E6682D",
+                                      }
                                     : {
-                                      ...activeBorder,
-                                      borderColor: "transparent",
-                                    }
+                                        ...activeBorder,
+                                        borderColor: "transparent",
+                                      }
                                 }
                               >
                                 <StyleTabText
@@ -274,11 +272,11 @@ export const Header = ({ sessionObject }) => {
                                   sx={
                                     value === i
                                       ? {
-                                        ...tabStyle?.active_tab,
-                                      }
+                                          ...tabStyle?.active_tab,
+                                        }
                                       : {
-                                        ...tabStyle.default_tab,
-                                      }
+                                          ...tabStyle.default_tab,
+                                        }
                                   }
                                 >
                                   {item?.name}
@@ -296,9 +294,9 @@ export const Header = ({ sessionObject }) => {
                                 value === i
                                   ? { ...activeBorder, borderColor: "#E6682D" }
                                   : {
-                                    ...activeBorder,
-                                    borderColor: "transparent",
-                                  }
+                                      ...activeBorder,
+                                      borderColor: "transparent",
+                                    }
                               }
                             >
                               <StyleTabText
@@ -306,11 +304,11 @@ export const Header = ({ sessionObject }) => {
                                 sx={
                                   value === i
                                     ? {
-                                      ...tabStyle?.active_tab,
-                                    }
+                                        ...tabStyle?.active_tab,
+                                      }
                                     : {
-                                      ...tabStyle.default_tab,
-                                    }
+                                        ...tabStyle.default_tab,
+                                      }
                                 }
                               >
                                 {item?.name}
@@ -322,188 +320,221 @@ export const Header = ({ sessionObject }) => {
                   </Box>
                 </Grid>
 
-                {
-                  tabs && (tabs?.patient_dashboard_recapture_percentage?.active || tabs?.patient_dashboard_suspect_percentage?.active) && doctorDetail?.doctor_name && ((doctorDetail?.recapture_percentage !== "-") || (doctorDetail?.suspects_addressed_percentage !== "-")) ?
-                    <Grid item md={7} sm={12} className="suspect_recapture_header"
-                      sx={(theme) => ({
-                        ...(tabs &&
-                          (tabs?.patient_dashboard_recapture_percentage?.active ||
-                            tabs?.patient_dashboard_suspect_percentage?.active) &&
-                          doctorDetail?.doctor_name
-                          ? {
-                            
-                          }
-                          : null)
-                      })}
-
+                {tabs &&
+                (tabs?.patient_dashboard_recapture_percentage?.active ||
+                  tabs?.patient_dashboard_suspect_percentage?.active) &&
+                doctorDetail?.doctor_name &&
+                (doctorDetail?.recapture_percentage !== "-" ||
+                  doctorDetail?.suspects_addressed_percentage !== "-") ? (
+                  <Grid
+                    item
+                    md={7}
+                    sm={12}
+                    className="suspect_recapture_header"
+                    sx={(theme) => ({
+                      ...(tabs &&
+                      (tabs?.patient_dashboard_recapture_percentage?.active ||
+                        tabs?.patient_dashboard_suspect_percentage?.active) &&
+                      doctorDetail?.doctor_name
+                        ? {}
+                        : null),
+                    })}
+                  >
+                    <Box
+                      className="panel_metric_header"
+                      sx={{
+                        ...flexCenter,
+                        // gap: { sm: 2, md: 0.9, lg: 1, xl: 1 },
+                        width: "100%",
+                        height: "3.75rem",
+                        // justifyContent: "flex-end",
+                        // [theme.breakpoints.down("sm")]: {
+                        //   justifyContent: 'flex-start'
+                        // },
+                        [theme.breakpoints.down("lg")]: {},
+                      }}
                     >
                       <Box
-                        className="panel_metric_header"
                         sx={{
                           ...flexCenter,
-                          // gap: { sm: 2, md: 0.9, lg: 1, xl: 1 },
-                          width: "100%",
-                          height: "3.75rem",
-                          // justifyContent: "flex-end",
-                          // [theme.breakpoints.down("sm")]: {
-                          //   justifyContent: 'flex-start'
-                          // },
-                          [theme.breakpoints.down("lg")]: {},
+                          gap: 0.2,
+                          flexDirection: "column",
                         }}
                       >
-
-                        <Box sx={{ ...flexCenter, gap: 0.2, flexDirection: "column" }}>
-                          <StyleText
-                            sx={{
-                              fontWeight: 600,
-                              fontSize: "0.875rem",
-                              color: "#000",
-
-                              [theme.breakpoints.down("md")]: {
-                                p: 0,
-                              },
-                            }}
-                          >
-                            Panel
-
-                          </StyleText>
-
-                          <StyleText
-                            sx={{
-                              fontWeight: 600,
-                              fontSize: "0.875rem",
-                              color: "#000",
-
-                              [theme.breakpoints.down("md")]: {
-                                p: 0,
-                              },
-                            }}
-                          >
-
-                            Metrics:
-                          </StyleText>
-                        </Box>
-
-                        {tabs &&
-                          (tabs["patient_dashboard_recapture_percentage"] || tabs["patient_dashboard_recapture_percentage"].active)
-                          && (
-                            <Box sx={{ ...flexCenter, gap: 0.4, flexDirection: "column" }}>
-                              <StyleText
-                                sx={{
-                                  fontWeight: 600,
-
-                                  fontSize: "12px",
-                                  color: "#000",
-                                  [theme.breakpoints.only("md")]: {
-                                    p: 0,
-                                  },
-                                }}
-                              >
-                                Recapture
-                              </StyleText>
-
-                              <StyleText
-                                sx={{
-                                  fontFamily: "Proxima nova",
-                                  color: theme.palette.success.main,
-                                  fontWeight: 600,
-                                  fontSize: "0.875rem",
-                                  marginTop: "3px"
-                                }}
-                              >
-                                {doctorDetail?.recapture_percentage || " - "}
-                              </StyleText>
-                            </Box>
-                          )}
-
-                        {tabs &&
-                          (tabs["patient_dashboard_suspect_percentage"] || tabs["patient_dashboard_suspect_percentage"].active)
-
-                          && (
-                            <Box sx={{ ...flexCenter, gap: 0.4, flexDirection: "column" }}>
-                              <StyleText
-                                sx={{
-                                  fontWeight: 600,
-                                  fontSize: "12px",
-                                  color: "#000",
-
-                                }}
-                              >
-                                Suspects
-                              </StyleText>
-                              <StyleText
-                                sx={{
-                                  color: theme.palette.success.main,
-                                  fontFamily: "Proxima nova",
-                                  fontWeight: 600,
-                                  fontSize: "0.875rem",
-                                  marginTop: "3px"
-                                }}
-                              >
-                                {doctorDetail?.suspects_addressed_percentage || " - "}
-                              </StyleText>
-                            </Box>
-                          )}
-                        <Box className="header_patient_name" sx={{ whiteSpace: "nowrap" }}>
-                          <StyleText
-                            sx={{
-                              fontWeight: 600,
-                              [theme.breakpoints.up(967)]: {
-                                marginLeft: "50px"
-                              },
-                            }}
-                          >
-                            {doctorDetail?.doctor_name && doctorDetail?.doctor_name || " - "}
-                          </StyleText>
-                        </Box>
-                      </Box>
-                    </Grid> :
-                    (doctorDetail?.doctor_name) ?
-                      <Grid item md={7} sm={12} className="suspect_recapture_header"
-                        sx={(theme) => ({
-                          ...(tabs &&
-                            (tabs?.patient_dashboard_recapture_percentage?.active ||
-                              tabs?.patient_dashboard_suspect_percentage?.active) &&
-                            doctorDetail?.doctor_name
-                            ? {
-                              [theme.breakpoints.down("sm")]: {
-                                display: "none"
-                              }
-                            }
-                            : null)
-                        })}
-
-                      >
-                        <Box
-                          className="panel_metric_header"
+                        <StyleText
                           sx={{
-                            ...flexCenter,
-                            // gap: { sm: 2, md: 0.9, lg: 1, xl: 1 },
-                            width: "100%",
-                            height: "3.75rem",
-                            // justifyContent: "flex-end",
-                            // [theme.breakpoints.down("sm")]: {
-                            //   justifyContent: 'flex-start'
-                            // },
-                            [theme.breakpoints.down("lg")]: {},
+                            fontWeight: 600,
+                            fontSize: "0.875rem",
+                            color: "#000",
+
+                            [theme.breakpoints.down("md")]: {
+                              p: 0,
+                            },
                           }}
                         >
-                          <Box className="header_patient_name" sx={{ whiteSpace: "nowrap" }}>
+                          Panel
+                        </StyleText>
+
+                        <StyleText
+                          sx={{
+                            fontWeight: 600,
+                            fontSize: "0.875rem",
+                            color: "#000",
+
+                            [theme.breakpoints.down("md")]: {
+                              p: 0,
+                            },
+                          }}
+                        >
+                          Metrics:
+                        </StyleText>
+                      </Box>
+
+                      {tabs &&
+                        (tabs["patient_dashboard_recapture_percentage"] ||
+                          tabs["patient_dashboard_recapture_percentage"]
+                            .active) && (
+                          <Box
+                            sx={{
+                              ...flexCenter,
+                              gap: 0.4,
+                              flexDirection: "column",
+                            }}
+                          >
                             <StyleText
                               sx={{
                                 fontWeight: 600,
-                                // [theme.breakpoints.down("lg")]: {
-                                //   width: "10rem",
-                                // },
+
+                                fontSize: "12px",
+                                color: "#000",
+                                [theme.breakpoints.only("md")]: {
+                                  p: 0,
+                                },
                               }}
                             >
-                              {doctorDetail?.doctor_name && doctorDetail?.doctor_name || " - "}
+                              Recapture
+                            </StyleText>
+
+                            <StyleText
+                              sx={{
+                                fontFamily: "Proxima nova",
+                                color: theme.palette.success.main,
+                                fontWeight: 600,
+                                fontSize: "0.875rem",
+                                marginTop: "3px",
+                              }}
+                            >
+                              {doctorDetail?.recapture_percentage || " - "}
                             </StyleText>
                           </Box>
-                        </Box>
-                      </Grid>
-                      : null}
+                        )}
 
+                      {tabs &&
+                        (tabs["patient_dashboard_suspect_percentage"] ||
+                          tabs["patient_dashboard_suspect_percentage"]
+                            .active) && (
+                          <Box
+                            sx={{
+                              ...flexCenter,
+                              gap: 0.4,
+                              flexDirection: "column",
+                            }}
+                          >
+                            <StyleText
+                              sx={{
+                                fontWeight: 600,
+                                fontSize: "12px",
+                                color: "#000",
+                              }}
+                            >
+                              Suspects
+                            </StyleText>
+                            <StyleText
+                              sx={{
+                                color: theme.palette.success.main,
+                                fontFamily: "Proxima nova",
+                                fontWeight: 600,
+                                fontSize: "0.875rem",
+                                marginTop: "3px",
+                              }}
+                            >
+                              {doctorDetail?.suspects_addressed_percentage ||
+                                " - "}
+                            </StyleText>
+                          </Box>
+                        )}
+                      <Box
+                        className="header_patient_name"
+                        sx={{ whiteSpace: "nowrap" }}
+                      >
+                        <StyleText
+                          sx={{
+                            fontWeight: 600,
+                            [theme.breakpoints.up(967)]: {
+                              marginLeft: "50px",
+                            },
+                          }}
+                        >
+                          {(doctorDetail?.doctor_name &&
+                            doctorDetail?.doctor_name) ||
+                            " - "}
+                        </StyleText>
+                      </Box>
+                    </Box>
+                  </Grid>
+                ) : doctorDetail?.doctor_name ? (
+                  <Grid
+                    item
+                    md={7}
+                    sm={12}
+                    className="suspect_recapture_header"
+                    sx={(theme) => ({
+                      ...(tabs &&
+                      (tabs?.patient_dashboard_recapture_percentage?.active ||
+                        tabs?.patient_dashboard_suspect_percentage?.active) &&
+                      doctorDetail?.doctor_name
+                        ? {
+                            [theme.breakpoints.down("sm")]: {
+                              display: "none",
+                            },
+                          }
+                        : null),
+                    })}
+                  >
+                    <Box
+                      className="panel_metric_header"
+                      sx={{
+                        ...flexCenter,
+                        // gap: { sm: 2, md: 0.9, lg: 1, xl: 1 },
+                        width: "100%",
+                        height: "3.75rem",
+                        // justifyContent: "flex-end",
+                        // [theme.breakpoints.down("sm")]: {
+                        //   justifyContent: 'flex-start'
+                        // },
+                        [theme.breakpoints.down("lg")]: {},
+                      }}
+                    >
+                      <Box
+                        className="header_patient_name"
+                        sx={{ whiteSpace: "nowrap" }}
+                      >
+                        <StyleText
+                          sx={{
+                            fontWeight: 600,
+                            // [theme.breakpoints.down("lg")]: {
+                            //   width: "10rem",
+                            // },
+                          }}
+                        >
+                          {(doctorDetail?.doctor_name &&
+                            doctorDetail?.doctor_name) ||
+                            " - "}
+                        </StyleText>
+                      </Box>
+                    </Box>
+                  </Grid>
+                ) : null}
               </Grid>
             </>
           </Container>
@@ -550,42 +581,41 @@ export const Header = ({ sessionObject }) => {
               </Typography>
             </Box>
             <Box>
-
               {/* Existing Code count */}
               {sessionObject?.existingCode?.length +
                 sessionObject?.existingCodeReject?.length >
                 0 && (
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      color: "#475467",
-                    }}
-                  >
-                    <StyleNumber>
-                      {sessionObject?.existingCode?.length +
-                        sessionObject?.existingCodeReject?.length}
-                    </StyleNumber>
-                    {` urgent recaptures,`}
-                  </Typography>
-                )}
+                <Typography
+                  variant="body2"
+                  sx={{
+                    color: "#475467",
+                  }}
+                >
+                  <StyleNumber>
+                    {sessionObject?.existingCode?.length +
+                      sessionObject?.existingCodeReject?.length}
+                  </StyleNumber>
+                  {` urgent recaptures,`}
+                </Typography>
+              )}
 
               {/* Duplicate code count */}
               {sessionObject?.duplicateCode?.length +
                 sessionObject?.duplicateCodeReject?.length >
                 0 && (
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      color: "#475467",
-                    }}
-                  >
-                    <StyleNumber>
-                      {sessionObject?.duplicateCode?.length +
-                        sessionObject?.duplicateCodeReject?.length}
-                    </StyleNumber>
-                    {` Additional diagnoses,`}
-                  </Typography>
-                )}
+                <Typography
+                  variant="body2"
+                  sx={{
+                    color: "#475467",
+                  }}
+                >
+                  <StyleNumber>
+                    {sessionObject?.duplicateCode?.length +
+                      sessionObject?.duplicateCodeReject?.length}
+                  </StyleNumber>
+                  {` Additional diagnoses,`}
+                </Typography>
+              )}
 
               {/* Suspects count */}
               <Box
@@ -597,25 +627,25 @@ export const Header = ({ sessionObject }) => {
                 {sessionObject?.suspectCode?.length +
                   sessionObject?.suspectCodeReject?.length >
                   0 && (
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        color: "#475467",
-                      }}
-                    >
-                      <StyleNumber>
-                        {sessionObject?.suspectCode?.length +
-                          sessionObject?.suspectCodeReject?.length}
-                      </StyleNumber>
-                      {` suspects`}
-                    </Typography>
-                  )}
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      color: "#475467",
+                    }}
+                  >
+                    <StyleNumber>
+                      {sessionObject?.suspectCode?.length +
+                        sessionObject?.suspectCodeReject?.length}
+                    </StyleNumber>
+                    {` suspects`}
+                  </Typography>
+                )}
                 {sessionObject?.suspectCode?.length +
                   sessionObject?.suspectCodeReject?.length >
                   0 &&
                   sessionObject?.recaptureCode?.length +
-                  sessionObject?.recaptureCodeReject?.length >
-                  0 && (
+                    sessionObject?.recaptureCodeReject?.length >
+                    0 && (
                     <Typography
                       variant="body2"
                       sx={{
@@ -628,19 +658,19 @@ export const Header = ({ sessionObject }) => {
                 {sessionObject?.recaptureCode?.length +
                   sessionObject?.recaptureCodeReject?.length >
                   0 && (
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        color: "#475467",
-                      }}
-                    >
-                      <StyleNumber>
-                        {sessionObject?.recaptureCode?.length +
-                          sessionObject?.recaptureCodeReject?.length}
-                      </StyleNumber>
-                      {` code not in your problem list.`}
-                    </Typography>
-                  )}
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      color: "#475467",
+                    }}
+                  >
+                    <StyleNumber>
+                      {sessionObject?.recaptureCode?.length +
+                        sessionObject?.recaptureCodeReject?.length}
+                    </StyleNumber>
+                    {` code not in your problem list.`}
+                  </Typography>
+                )}
               </Box>
             </Box>
             <Box>
@@ -679,7 +709,6 @@ const routes = [
     path: `/my-profile`,
   },
 ];
-
 
 const flexCenter = {
   display: "flex",

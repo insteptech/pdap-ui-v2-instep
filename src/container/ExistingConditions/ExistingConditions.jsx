@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useTheme } from "@emotion/react";
-import {
-  Box,
-  Grid,
-  Typography,
-  ButtonGroup,
-  Tooltip,
-} from "@mui/material";
+import { Box, Grid, Typography, ButtonGroup, Tooltip } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
@@ -84,7 +78,7 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
 
   const [checkedAcceptAll, setCheckedAcceptAll] = useState([]);
 
-  const [buttonDisable, setButtonDisable] = useState(false)
+  const [buttonDisable, setButtonDisable] = useState(false);
   const { user } = useSelector((state) => state);
 
   const handleClickOpen = (item, code) => {
@@ -104,18 +98,17 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
           event_datetime: convertDate(new Date().toISOString()),
           code: item?.code,
           description: item?.value ? item?.value : item?.info?.value,
-          reasonForRejection: '',
+          reasonForRejection: "",
           raf: item?.info?.total_weight,
           alternateCodes: item?.info?.alternate_codes,
-          parentCodesCount: ""
-        }
+          parentCodesCount: "",
+        },
       };
 
       handleAddEventData(exampleMetadata);
     } else {
       setSelectedRejectData(item);
-      const exampleMetadata =
-      {
+      const exampleMetadata = {
         event_type: "EXISTING_CONDITION_REJECTION_REASON_SELECTION",
         metadata: {
           identifier: tabs?.["user"]?.value || "",
@@ -127,19 +120,17 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
           reasonForRejection: rejectReason,
           raf: item?.info?.total_weight,
           alternateCodes: item?.info?.alternate_codes,
-          parentCodesCount: (existingCondition?.length + 1)
-        }
+          parentCodesCount: existingCondition?.length + 1,
+        },
       };
 
       handleAddEventData(exampleMetadata);
     }
     setSelectedMainCode(code);
     setDeleteOpen(true);
-
   };
 
   const handleRemoveDeletedCode = (item, id) => {
-
     if (userDetail?.mrn) {
       sessionObject = JSON.parse(
         localStorage.getItem(`sessionObject_${userDetail.mrn}`)
@@ -215,11 +206,11 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
               const updatingData = updatedRejectData?.map((val) => {
                 return Object.keys(val)[0] === item?.code
                   ? {
-                    [selectedMainCode]: {
-                      ...val[selectedMainCode],
-                      delete_code: false,
-                    },
-                  }
+                      [selectedMainCode]: {
+                        ...val[selectedMainCode],
+                        delete_code: false,
+                      },
+                    }
                   : val;
               });
               setExistingRejectData([...updatingData]);
@@ -227,11 +218,11 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
               let changeData = updatedRejectData?.map((value) => {
                 return Object.keys(codeValue)[0] === Object.keys(value)[0]
                   ? {
-                    [selectedMainCode]: {
-                      ...value[selectedMainCode],
-                      delete_code: codeValue[id]?.delete_code,
-                    },
-                  }
+                      [selectedMainCode]: {
+                        ...value[selectedMainCode],
+                        delete_code: codeValue[id]?.delete_code,
+                      },
+                    }
                   : value;
               });
               setExistingRejectData([...changeData]);
@@ -251,7 +242,6 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
       }
     }
 
-
     const exampleMetadata = {
       event_type: "EXISTING_CONDITION_REJECT-CODE",
       metadata: {
@@ -261,11 +251,11 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
         event_datetime: convertDate(new Date().toISOString()),
         code: item?.code,
         description: item?.value ? item?.value : item?.info?.value,
-        reasonForRejection: '',
+        reasonForRejection: "",
         raf: item?.info?.total_weight,
         alternateCodes: item?.info?.alternate_codes,
-        parentCodesCount: (existingCondition?.length + 1)
-      }
+        parentCodesCount: existingCondition?.length + 1,
+      },
     };
 
     handleAddEventData(exampleMetadata);
@@ -279,21 +269,20 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
     setDeleteOpen(false);
 
     const exampleMetadata = {
-      event_type: "EXISTING_CONDITION_REJECTION_REASON_CANCEL", metadata: {
+      event_type: "EXISTING_CONDITION_REJECTION_REASON_CANCEL",
+      metadata: {
         identifier: tabs?.["user"]?.value || "",
         provider_name: doctorDetail?.doctor_name || "",
         patient_id: user?.data?.userInfo?.mrn || "",
         event_datetime: convertDate(new Date().toISOString()),
-        parentCodesCount: (existingCondition?.length + 1)
-      }
+        parentCodesCount: existingCondition?.length + 1,
+      },
     };
 
-    handleAddEventData(exampleMetadata)
-
+    handleAddEventData(exampleMetadata);
   };
 
   const handleClickOpen1 = (item) => {
-
     if (userDetail?.mrn) {
       sessionObject = JSON.parse(
         localStorage.getItem(`sessionObject_${userDetail.mrn}`)
@@ -321,29 +310,30 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
         setSelectedExistingcode(codeList);
 
         const exampleMetadata = {
-          event_type: "EXISTING_CONDITION_ACCEPT_CODE", metadata: {
+          event_type: "EXISTING_CONDITION_ACCEPT_CODE",
+          metadata: {
             identifier: tabs?.["user"]?.value || "",
             provider_name: doctorDetail?.doctor_name || "",
             patient_id: user?.data?.userInfo?.mrn || "",
             event_datetime: convertDate(new Date().toISOString()),
             code: item?.code,
             description: item?.value ? item?.value : item?.info?.value,
-            reasonForRejection: '',
+            reasonForRejection: "",
             raf: item?.info?.total_weight,
             alternateCodes: item?.info?.alternate_codes,
-            parentCodesCount: (existingCondition?.length + 1)
-          }
+            parentCodesCount: existingCondition?.length + 1,
+          },
         };
 
         handleAddEventData(exampleMetadata);
-
       } else {
-
         codeList = {
           code: item?.code,
           value: item?.value ? item?.value : item?.info?.value,
           additional_info: item?.remarks ? item?.remarks : item?.info?.remarks,
-          code_in_problem_list: item?.code_in_problem_list ? item?.code_in_problem_list : item?.info?.code_in_problem_list
+          code_in_problem_list: item?.code_in_problem_list
+            ? item?.code_in_problem_list
+            : item?.info?.code_in_problem_list,
         };
         updateVal =
           selectedExistingcode?.length > 0
@@ -352,18 +342,19 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
         setSelectedExistingcode(updateVal);
 
         const exampleMetadata = {
-          event_type: "EXISTING_CONDITION_ACCEPT_CODE", metadata: {
+          event_type: "EXISTING_CONDITION_ACCEPT_CODE",
+          metadata: {
             identifier: tabs?.["user"]?.value || "",
             provider_name: doctorDetail?.doctor_name || "",
             patient_id: user?.data?.userInfo?.mrn || "",
             event_datetime: convertDate(new Date().toISOString()),
             code: item?.code,
             description: item?.value ? item?.value : item?.info?.value,
-            reasonForRejection: '',
+            reasonForRejection: "",
             raf: item?.info?.total_weight,
             alternateCodes: item?.info?.alternate_codes,
-            parentCodesCount: (existingCondition?.length + 1)
-          }
+            parentCodesCount: existingCondition?.length + 1,
+          },
         };
 
         handleAddEventData(exampleMetadata);
@@ -451,7 +442,9 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
           code: item?.code,
           value: item?.value ? item?.value : item?.info?.value,
           additional_info: item?.remarks ? item?.remarks : item?.info?.remarks,
-          code_in_problem_list: item?.code_in_problem_list ? item?.code_in_problem_list : item?.info?.code_in_problem_list
+          code_in_problem_list: item?.code_in_problem_list
+            ? item?.code_in_problem_list
+            : item?.info?.code_in_problem_list,
         };
       }
     });
@@ -467,7 +460,6 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
     setRejectExistingCode([...rejectedCodes]);
     codeList.length &&
       setSelectedExistingcode([...selectedExistingcode, ...codeList]);
-
   };
 
   useEffect(() => {
@@ -475,23 +467,27 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
   }, []);
 
   useEffect(() => {
-    if (sessionObject && !sessionObjLoaded && Object.keys(sessionObject).length > 0) {
+    if (
+      sessionObject &&
+      !sessionObjLoaded &&
+      Object.keys(sessionObject).length > 0
+    ) {
       let newExisting =
         existingCode?.length > 0 && sessionObject?.existingCode?.length > 0
           ? [...sessionObject?.existingCode, ...existingCode]
           : existingCode?.length > 0
-            ? existingCode
-            : sessionObject?.existingCode || [];
+          ? existingCode
+          : sessionObject?.existingCode || [];
       selectedExistingcode?.length === 0 &&
         setSelectedExistingcode([...newExisting]);
 
       let newExistingReject =
         rejectExistingCode?.length > 0 &&
-          sessionObject?.existingCodeReject?.length > 0
+        sessionObject?.existingCodeReject?.length > 0
           ? [...sessionObject?.existingCodeReject, ...rejectExistingCode]
           : rejectExistingCode?.length > 0
-            ? rejectExistingCode
-            : sessionObject?.existingCodeReject || [];
+          ? rejectExistingCode
+          : sessionObject?.existingCodeReject || [];
       rejectExistingCode?.length === 0 &&
         setRejectExistingCode([...newExistingReject]);
       checkCodesAvailability(existingCondition, existingCode);
@@ -517,7 +513,6 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
   }, [selectedExistingcode, rejectExistingCode]);
 
   const handleCollapse = (code) => {
-
     let val;
 
     let changeData = existingCondition?.map((value) => {
@@ -527,28 +522,30 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
     });
 
     const changeData2 = existingCondition?.filter((value) => {
-      return value?.code === code
+      return value?.code === code;
     });
 
     setExistingCondition(changeData);
 
     const exampleMetadata = {
-      event_type: changeData2[0]?.collapse ? "EXISTING_CONDITION_SEE_ALL_DETAILS" : "EXISTING_CONDITION_SEE_LESS_DETAILS", metadata: {
+      event_type: changeData2[0]?.collapse
+        ? "EXISTING_CONDITION_SEE_ALL_DETAILS"
+        : "EXISTING_CONDITION_SEE_LESS_DETAILS",
+      metadata: {
         identifier: tabs?.["user"]?.value,
         provider_name: doctorDetail?.doctor_name || "",
         patient_id: user?.data?.userInfo?.mrn || "",
         event_datetime: convertDate(new Date().toISOString()),
         code: changeData2[0]?.code,
         description: changeData2[0]?.info?.value,
-        reasonForRejection: '',
+        reasonForRejection: "",
         raf: changeData2[0]?.info?.total_weight,
         alternateCodes: changeData2[0]?.info.alternate_codes,
-        parentCodesCount: changeData?.length + 1
-      }
+        parentCodesCount: changeData?.length + 1,
+      },
     };
 
     handleAddEventData(exampleMetadata);
-
   };
 
   const handleIsCollapse = (data) => {
@@ -566,22 +563,22 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
     setExistingCondition(changeData);
 
     const exampleMetadata = {
-      event_type: "EXISTING_CONDITION_SEE_ALL_DETAILS", metadata: {
+      event_type: "EXISTING_CONDITION_SEE_ALL_DETAILS",
+      metadata: {
         identifier: tabs?.["user"]?.value || "",
         provider_name: doctorDetail?.doctor_name || "",
         patient_id: user?.data?.userInfo?.mrn || "",
         event_datetime: convertDate(new Date().toISOString()),
         code: code,
         description: "",
-        reasonForRejection: '',
+        reasonForRejection: "",
         raf: "",
         alternateCodes: "",
-        parentCodesCount: (existingCondition?.length + 1)
-      }
+        parentCodesCount: existingCondition?.length + 1,
+      },
     };
 
     handleAddEventData(exampleMetadata);
-
   };
 
   const handleClinicalDoc = async (item) => {
@@ -596,7 +593,6 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
   };
 
   const handleDeleteAll = () => {
-
     let reason = rejectReason === "Other" ? otherText : rejectReason;
     let val = {
       isValid: true,
@@ -677,12 +673,10 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
       otherText?.length > 0 && setOtherText(null);
       setHandleFunction(false);
       setDeleteOpen(false);
-
     }
   };
 
   const handleDelete = () => {
-
     let reason = rejectReason === "Other" ? otherText : rejectReason;
     let val = {
       isValid: true,
@@ -690,11 +684,10 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
     if (rejectReason === "Other") {
       val = ReasonTextVal(otherText);
       setError(val);
-
     }
     if (!val.isValid) {
       setError(val);
-      return
+      return;
     } else {
       let code = rejectExistingData?.some((value, index) => {
         let key = Object.keys(value)[0];
@@ -740,11 +733,11 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
           let changeData = rejectExistingData?.map((value) => {
             return Object.keys(codeValue)[0] === Object.keys(value)[0]
               ? {
-                [selectedMainCode]: {
-                  ...value[selectedMainCode],
-                  delete_code: true,
-                },
-              }
+                  [selectedMainCode]: {
+                    ...value[selectedMainCode],
+                    delete_code: true,
+                  },
+                }
               : value;
           });
           setExistingRejectData([...changeData]);
@@ -797,7 +790,8 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
       otherText?.length > 0 && setOtherText(null);
 
       const exampleMetadata = {
-        event_type: "EXISTING_CONDITION_REJECTION_REASON_DELETION", metadata: {
+        event_type: "EXISTING_CONDITION_REJECTION_REASON_DELETION",
+        metadata: {
           identifier: tabs?.["user"]?.value || "",
           provider_name: doctorDetail?.doctor_name || "",
           patient_id: user?.data?.userInfo?.mrn || "",
@@ -807,17 +801,13 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
           reasonForRejection: reason,
           raf: selectedRejectData?.info?.total_weight,
           alternateCodes: selectedRejectData?.info?.alternate_codes,
-          parentCodesCount: (existingCondition?.length + 1)
-        }
+          parentCodesCount: existingCondition?.length + 1,
+        },
       };
 
       handleAddEventData(exampleMetadata);
-
     }
     setButtonDisable(true);
-
-
-
   };
 
   const handleReseon = (event) => {
@@ -830,7 +820,6 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
   };
 
   const handleOtherText = (e) => {
-
     let value = e.target.value;
     let val = ReasonTextVal(value);
     setError(val);
@@ -862,14 +851,20 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
                   }}
                   className="acc-content-header-items"
                 >
-                  <StyledText sx={{ paddingLeft: "6px !important" }} className="acc-content-header-item ct-code">
+                  <StyledText
+                    sx={{ paddingLeft: "6px !important" }}
+                    className="acc-content-header-item ct-code"
+                  >
                     Code(s)
                   </StyledText>
-                  <StyledText sx={{
-                    [theme.breakpoints.only("xs")]: {
-                      borderRight: "2px solid black"
-                    },
-                  }} className="acc-content-header-item ct-desc">
+                  <StyledText
+                    sx={{
+                      [theme.breakpoints.only("xs")]: {
+                        borderRight: "2px solid black",
+                      },
+                    }}
+                    className="acc-content-header-item ct-desc"
+                  >
                     Description
                   </StyledText>
                   {tabs && tabs["patient_dashboard_weights"]?.active && (
@@ -877,13 +872,14 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
                       RAF
                     </StyledText>
                   )}
-                  <StyledText sx={{
-
-                    '@media (max-width:767px)': {
-                      display: 'none'
-                    }
-
-                  }} className="acc-content-header-item ct-actions">
+                  <StyledText
+                    sx={{
+                      "@media (max-width:767px)": {
+                        display: "none",
+                      },
+                    }}
+                    className="acc-content-header-item ct-actions"
+                  >
                     Actions
                   </StyledText>
                 </StyledBox>
@@ -915,9 +911,14 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
                       padding: "10px 10px 10px",
                       backgroundColor: "#fff",
                       borderRadius: index === 0 ? 0 : "10px",
-                      borderBottomLeftRadius: Object.keys(item?.info?.alternate_codes).length > 0 ? 0 : "10px",
-                      borderBottomRightRadius: Object.keys(item?.info?.alternate_codes).length > 0 ? 0 : "10px",
-
+                      borderBottomLeftRadius:
+                        Object.keys(item?.info?.alternate_codes).length > 0
+                          ? 0
+                          : "10px",
+                      borderBottomRightRadius:
+                        Object.keys(item?.info?.alternate_codes).length > 0
+                          ? 0
+                          : "10px",
                     }}
                   >
                     {/* Content - Code */}
@@ -980,7 +981,6 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
                               [theme.breakpoints.up("md")]: {
                                 fontSize: "90%",
                               },
-
                             }}
                           >
                             {item?.info?.value}
@@ -1010,7 +1010,10 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
                           </StyledText>
                         </Box>
                       ) : (
-                        <Grid sx={{ gap: "10px !important", marginTop: "7px" }} container>
+                        <Grid
+                          sx={{ gap: "10px !important", marginTop: "7px" }}
+                          container
+                        >
                           {/* Expanded view */}
                           <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                             <StyledText
@@ -1029,8 +1032,7 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
                             </StyledText>
                           </Grid>
 
-                          {
-                            !item?.info['hide_noted_by_&_noted_date'] &&
+                          {!item?.info["hide_noted_by_&_noted_date"] && (
                             <>
                               <Grid item xs={6} sm={12} md={12} lg={6} xl={6}>
                                 <Box
@@ -1043,10 +1045,9 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
                                     display: "inline-block",
                                   }}
                                 >
-
                                   <Typography
                                     sx={{
-                                      opacity: 0.6
+                                      opacity: 0.6,
                                     }}
                                   >
                                     Noted by:
@@ -1060,14 +1061,13 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
                                       letterSpacing: "0.02em",
                                       padding: "0px",
                                       margin: "0px",
-                                      paddingLeft: "4px"
+                                      paddingLeft: "4px",
                                     }}
                                   >
                                     {item?.info?.noted_by}
                                   </Typography>
                                 </Box>
                               </Grid>
-
 
                               <Grid item xs={6} sm={12} md={12} lg={6} xl={6}>
                                 <Box
@@ -1078,13 +1078,11 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
                                     lineHeight: "25px",
                                     letterSpacing: "0em",
                                     display: "inline-block",
-
                                   }}
                                 >
-
                                   <Typography
                                     sx={{
-                                      opacity: 0.6
+                                      opacity: 0.6,
                                     }}
                                   >
                                     Date:
@@ -1103,52 +1101,46 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
                                 </Box>
                               </Grid>
                             </>
-                          }
+                          )}
 
-                          {
+                          {!item?.info?.hide_remarks && (
+                            <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                              <Box
+                                sx={{
+                                  fontSize: "14px",
+                                  fontWeight: 400,
 
-                            !item?.info?.hide_remarks && (
-                              <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-                                <Box
+                                  lineHeight: "25px",
+                                  letterSpacing: "0em",
+                                  display: "inline-block",
+                                }}
+                              >
+                                <Typography
                                   sx={{
-
-                                    fontSize: "14px",
-                                    fontWeight: 400,
-
-                                    lineHeight: "25px",
-                                    letterSpacing: "0em",
-                                    display: "inline-block",
+                                    opacity: 0.6,
                                   }}
                                 >
+                                  Remarks:
+                                </Typography>
+                                <Typography
+                                  sx={{
+                                    fontSize: "14px",
+                                    fontWeight: 700,
 
-
-                                  <Typography
-                                    sx={{
-                                      opacity: 0.6
-                                    }}
-                                  >
-                                    Remarks:
-                                  </Typography>
-                                  <Typography
-                                    sx={{
-                                      fontSize: "14px",
-                                      fontWeight: 700,
-
-                                      lineHeight: "25px",
-                                      letterSpacing: "0.02em",
-                                      paddingLeft: "4px",
-                                    }}
-                                  >
-                                    {item?.info?.remarks}
-                                  </Typography>
-                                </Box>
-                              </Grid>
-                            )}
+                                    lineHeight: "25px",
+                                    letterSpacing: "0.02em",
+                                    paddingLeft: "4px",
+                                  }}
+                                >
+                                  {item?.info?.remarks}
+                                </Typography>
+                              </Box>
+                            </Grid>
+                          )}
 
                           <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                             <Box
                               sx={{
-
                                 fontSize: "14px",
                                 fontWeight: 400,
                                 lineHeight: "25px",
@@ -1158,8 +1150,6 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
                               }}
                             >
                               Sources:
-
-
                               {item?.info?.sources?.map((source, index) => (
                                 <Typography
                                   key={index}
@@ -1240,6 +1230,7 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
                               marginTop: "7px",
                               [theme.breakpoints.only("xl")]: {
                                 pr: 1,
+                                ml: 3,
                               },
                               [theme.breakpoints.only("md")]: {
                                 justifyContent: "start",
@@ -1266,10 +1257,13 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
                               (ele) => ele.code === item.code
                             ) ? (
                               <StyledButton1
-                                disabled={(tabs?.read_only_rejection_allowed?.active || (tabs?.read_only_mode?.active))}
+                                disabled={
+                                  tabs?.read_only_rejection_allowed?.active ||
+                                  tabs?.read_only_mode?.active
+                                }
                                 sx={{
-                                  border: "none !important", width: "105px !important",
-                                 
+                                  border: "none !important",
+                                  width: "105px !important",
                                 }}
                                 onClick={() => handleClickOpen1(item)}
                                 startIcon={
@@ -1289,11 +1283,11 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
                                 Accepted
                               </StyledButton1>
                             ) : !rejectExistingCode?.some((value, index) => {
-                              let key = Object.keys(value)[0];
-                              if (item.code === key) {
-                                return true;
-                              }
-                            }) ? (
+                                let key = Object.keys(value)[0];
+                                if (item.code === key) {
+                                  return true;
+                                }
+                              }) ? (
                               <StyledButton
                                 onClick={() => handleClickOpen1(item)}
                                 sx={{
@@ -1302,12 +1296,20 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
                                     mr: 2,
                                   },
                                   background:
-                                    (tabs?.read_only_rejection_allowed?.active || (tabs?.read_only_mode?.active)) && "#D5D5D5 ",
+                                    (tabs?.read_only_rejection_allowed
+                                      ?.active ||
+                                      tabs?.read_only_mode?.active) &&
+                                    "#D5D5D5 ",
                                 }}
                                 startIcon={
                                   <StyleCircle
                                     sx={{
-                                      background: (tabs?.read_only_rejection_allowed?.active || (tabs?.read_only_mode?.active)) ? '#ADADAD' : '#3D4A8F',
+                                      background:
+                                        tabs?.read_only_rejection_allowed
+                                          ?.active ||
+                                        tabs?.read_only_mode?.active
+                                          ? "#ADADAD"
+                                          : "#3D4A8F",
                                       ...flexAlignCenter,
                                       justifyContent: "center",
                                       borderRadius: "100px",
@@ -1316,7 +1318,10 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
                                     <CorrectIcon state="white" />
                                   </StyleCircle>
                                 }
-                                disabled={(tabs?.read_only_rejection_allowed?.active || (tabs?.read_only_mode?.active))}
+                                disabled={
+                                  tabs?.read_only_rejection_allowed?.active ||
+                                  tabs?.read_only_mode?.active
+                                }
                                 className="acc-content-act-btn"
                               >
                                 Accept
@@ -1368,20 +1373,23 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
                                     handleClickOpen(item, item?.code)
                                   }
                                   sx={{
-                                    backgroundColor:
-                                      (tabs?.read_only_mode?.active) ? "#D5D5D5" : theme.palette.primary.main,
+                                    backgroundColor: tabs?.read_only_mode
+                                      ?.active
+                                      ? "#D5D5D5"
+                                      : theme.palette.primary.main,
 
                                     color: "#fff",
                                     ":hover": {
                                       backgroundColor:
                                         theme.palette.primary.main,
                                     },
-
                                   }}
                                   startIcon={
                                     <StyleCircle
                                       sx={{
-                                        background: (tabs?.read_only_mode?.active) ? "#ADADAD" : "#434343",
+                                        background: tabs?.read_only_mode?.active
+                                          ? "#ADADAD"
+                                          : "#434343",
                                         ...flexAlignCenter,
                                         justifyContent: "center",
                                         borderRadius: "100px",
@@ -1433,8 +1441,9 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
                       },
                     }}
                     expandIcon={<ArrowDropDownIcon width={12} height={12} />}
-                    header={`Show Alternate Codes (${Object.keys(item?.info?.alternate_codes).length
-                      })`}
+                    header={`Show Alternate Codes (${
+                      Object.keys(item?.info?.alternate_codes).length
+                    })`}
                   >
                     {item?.info?.alternate_codes &&
                       item?.info?.alternate_codes?.map(
@@ -1449,7 +1458,6 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
                                 sx={{
                                   padding: "10px 10px 10px",
                                   backgroundColor: "#fff",
-
                                 }}
                               >
                                 {/* Alt code Content - Code */}
@@ -1769,18 +1777,16 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
                                       sx={{
                                         [theme.breakpoints.only("sm")]: {
                                           pl: "10px",
-                                        }
-                                        ,
+                                        },
                                         [theme.breakpoints.only("md")]: {
                                           pl: "2px !impotant",
                                         },
 
                                         [theme.breakpoints.only("lg")]: {
                                           pl: "2px !impotant",
-                                        }
+                                        },
                                       }}
                                       className="acc-content-header-item ct-raf"
-
                                     >
                                       {tabs &&
                                         tabs["patient_dashboard_weights"]
@@ -1800,7 +1806,7 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
 
                                               [theme.breakpoints.only("lg")]: {
                                                 pl: "2px !impotant",
-                                              }
+                                              },
                                             }}
                                           >
                                             {value?.total_weight}
@@ -1833,7 +1839,11 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
                                           (ele) => ele?.code === value?.code
                                         ) ? (
                                           <StyledButton1
-                                            disabled={(tabs?.read_only_rejection_allowed?.active || (tabs?.read_only_mode?.active))}
+                                            disabled={
+                                              tabs?.read_only_rejection_allowed
+                                                ?.active ||
+                                              tabs?.read_only_mode?.active
+                                            }
                                             sx={{ width: "105px !important" }}
                                             onClick={() =>
                                               handleClickOpen1(value)
@@ -1855,13 +1865,13 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
                                             Accepted
                                           </StyledButton1>
                                         ) : !rejectExistingCode?.some(
-                                          (val, index) => {
-                                            let key = Object.keys(val)[0];
-                                            if (value?.code === key) {
-                                              return true;
+                                            (val, index) => {
+                                              let key = Object.keys(val)[0];
+                                              if (value?.code === key) {
+                                                return true;
+                                              }
                                             }
-                                          }
-                                        ) ? (
+                                          ) ? (
                                           <StyledButton
                                             onClick={() =>
                                               handleClickOpen1(value)
@@ -1872,13 +1882,23 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
                                                 mr: 2,
                                               },
                                               background:
-                                                (tabs?.read_only_rejection_allowed?.active || (tabs?.read_only_mode?.active)) &&
+                                                (tabs
+                                                  ?.read_only_rejection_allowed
+                                                  ?.active ||
+                                                  tabs?.read_only_mode
+                                                    ?.active) &&
                                                 "#D5D5D5 ",
                                             }}
                                             startIcon={
                                               <StyleCircle
                                                 sx={{
-                                                  background: (tabs?.read_only_rejection_allowed?.active || (tabs?.read_only_mode?.active)) ? '#ADADAD' : '#3D4A8F',
+                                                  background:
+                                                    tabs
+                                                      ?.read_only_rejection_allowed
+                                                      ?.active ||
+                                                    tabs?.read_only_mode?.active
+                                                      ? "#ADADAD"
+                                                      : "#3D4A8F",
                                                   ...flexAlignCenter,
                                                   justifyContent: "center",
                                                   borderRadius: "100px",
@@ -1887,7 +1907,11 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
                                                 <CorrectIcon />
                                               </StyleCircle>
                                             }
-                                            disabled={(tabs?.read_only_rejection_allowed?.active || (tabs?.read_only_mode?.active))}
+                                            disabled={
+                                              tabs?.read_only_rejection_allowed
+                                                ?.active ||
+                                              tabs?.read_only_mode?.active
+                                            }
                                             className="acc-content-act-btn"
                                           >
                                             Accept
@@ -1905,7 +1929,9 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
                                             }
                                           ) ? (
                                             <StyledButton
-                                              disabled={tabs?.read_only_mode?.active}
+                                              disabled={
+                                                tabs?.read_only_mode?.active
+                                              }
                                               onClick={() =>
                                                 handleRemoveDeletedCode(
                                                   value,
@@ -1940,7 +1966,9 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
                                             </StyledButton>
                                           ) : (
                                             <StyledButton
-                                              disabled={tabs?.read_only_mode?.active}
+                                              disabled={
+                                                tabs?.read_only_mode?.active
+                                              }
                                               onClick={() =>
                                                 handleClickOpen(
                                                   value,
@@ -1948,8 +1976,10 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
                                                 )
                                               }
                                               sx={{
-                                                backgroundColor:
-                                                  (tabs?.read_only_mode?.active) ? "#D5D5D5" : theme.palette.primary.main,
+                                                backgroundColor: tabs
+                                                  ?.read_only_mode?.active
+                                                  ? "#D5D5D5"
+                                                  : theme.palette.primary.main,
 
                                                 color: "#fff",
                                                 ":hover": {
@@ -1960,8 +1990,10 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
                                               startIcon={
                                                 <StyleCircle
                                                   sx={{
-
-                                                    background: (tabs?.read_only_mode?.active) ? "#ADADAD" : "#434343",
+                                                    background: tabs
+                                                      ?.read_only_mode?.active
+                                                      ? "#ADADAD"
+                                                      : "#434343",
                                                     ...flexAlignCenter,
                                                     justifyContent: "center",
                                                     borderRadius: "100px",
@@ -2011,25 +2043,26 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
                           {tabs &&
                             tabs["patient_dashboard_accept_all"]?.active &&
                             (rejectExistingData &&
-                              rejectExistingData?.some((value) => {
-                                if (Object.keys(value)[0] === item?.code) {
-                                  if (
-                                    item?.info?.alternate_codes?.length ===
+                            rejectExistingData?.some((value) => {
+                              if (Object.keys(value)[0] === item?.code) {
+                                if (
+                                  item?.info?.alternate_codes?.length ===
                                     value[Object.keys(value)[0]]
                                       ?.alternate_codes?.length &&
-                                    value[Object.keys(value)[0]].delete_code ===
+                                  value[Object.keys(value)[0]].delete_code ===
                                     true
-                                  ) {
-                                    return true;
-                                  }
+                                ) {
+                                  return true;
                                 }
-                                return false;
-                              }) ? (
+                              }
+                              return false;
+                            }) ? (
                               <StyledButton
                                 disabled={tabs?.read_only_mode?.active}
                                 sx={{
-                                  backgroundColor:
-                                    (tabs?.read_only_mode?.active) ? "#D5D5D5" : theme.palette.error.active1,
+                                  backgroundColor: tabs?.read_only_mode?.active
+                                    ? "#D5D5D5"
+                                    : theme.palette.error.active1,
                                   color: "#fff",
                                   ":hover": {
                                     backgroundColor: theme.palette.error.main,
@@ -2071,12 +2104,16 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
                                     },
                                     width: "9.75rem",
                                     height: "2rem",
-
                                   }}
                                   startIcon={
                                     <StyleCircle
                                       sx={{
-                                        background: (tabs?.read_only_rejection_allowed?.active || (tabs?.read_only_mode?.active)) ? '#ADADAD' : '#434343',
+                                        background:
+                                          tabs?.read_only_rejection_allowed
+                                            ?.active ||
+                                          tabs?.read_only_mode?.active
+                                            ? "#ADADAD"
+                                            : "#434343",
                                         ...flexAlignCenter,
                                         justifyContent: "center",
                                         borderRadius: "100px",
@@ -2096,8 +2133,15 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
                         </Grid>
                       ) : (
                         <StyledButton2
-                          disabled={(tabs?.read_only_rejection_allowed?.active || (tabs?.read_only_mode?.active))}
-                          sx={{ mr: 2, width: "105px !important", height: "2rem" }}
+                          disabled={
+                            tabs?.read_only_rejection_allowed?.active ||
+                            tabs?.read_only_mode?.active
+                          }
+                          sx={{
+                            mr: 2,
+                            width: "105px !important",
+                            height: "2rem",
+                          }}
                           startIcon={
                             <StyleCircle
                               sx={{
@@ -2142,20 +2186,20 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
                             {tabs &&
                               tabs["patient_dashboard_accept_all"]?.active &&
                               (rejectExistingData &&
-                                rejectExistingData?.some((value) => {
-                                  if (Object.keys(value)[0] === item?.code) {
-                                    if (
-                                      item?.info?.alternate_codes?.length ===
+                              rejectExistingData?.some((value) => {
+                                if (Object.keys(value)[0] === item?.code) {
+                                  if (
+                                    item?.info?.alternate_codes?.length ===
                                       value[Object.keys(value)[0]]
                                         ?.alternate_codes?.length &&
-                                      value[Object.keys(value)[0]].delete_code ===
+                                    value[Object.keys(value)[0]].delete_code ===
                                       true
-                                    ) {
-                                      return true;
-                                    }
+                                  ) {
+                                    return true;
                                   }
-                                  return false;
-                                }) ? (
+                                }
+                                return false;
+                              }) ? (
                                 <Button
                                   disabled={tabs?.read_only_mode?.active}
                                   sx={{
@@ -2206,12 +2250,16 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
                                       fontWeight: 600,
                                       textTransform: "inherit",
                                       padding: "5px 25px",
-
                                     }}
                                     startIcon={
                                       <StyleCircle
                                         sx={{
-                                          background: (tabs?.read_only_rejection_allowed?.active || (tabs?.read_only_mode?.active)) ? '#ADADAD' : '#434343',
+                                          background:
+                                            tabs?.read_only_rejection_allowed
+                                              ?.active ||
+                                            tabs?.read_only_mode?.active
+                                              ? "#ADADAD"
+                                              : "#434343",
                                           ...flexAlignCenter,
                                           justifyContent: "center",
                                           borderRadius: "100px",
@@ -2231,7 +2279,10 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
                           </Grid>
                         ) : (
                           <Button
-                            disabled={(tabs?.read_only_rejection_allowed?.active || (tabs?.read_only_mode?.active))}
+                            disabled={
+                              tabs?.read_only_rejection_allowed?.active ||
+                              tabs?.read_only_mode?.active
+                            }
                             sx={{
                               borderRadius: "10px",
                               height: "37px",
@@ -2304,7 +2355,6 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
                 letterSpacing: "0em",
                 textAlign: "left",
                 color: "#101828",
-
               }}
             >
               Are you sure?
@@ -2330,7 +2380,9 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
                   Insufficient Proof
                 </MenuItem>
                 <MenuItem value="Resolved">Resolved</MenuItem>
-                <MenuItem value="A better, more accurate code exists">A better, more accurate code exists</MenuItem>
+                <MenuItem value="A better, more accurate code exists">
+                  A better, more accurate code exists
+                </MenuItem>
                 <MenuItem value="Other">Other</MenuItem>
               </SelectField>
               {rejectReason === "Other" && (
