@@ -134,12 +134,12 @@ export const rejectScanCodeRequest = createAsyncThunk("rejectScanCodeRequest", a
 export const patientSuspectedCode = createAsyncThunk("patientSuspectedCode", async () => {
     try {
         if (slug) {
-            const data = await axios.get(`${baseUrl}/api/v1/patient-suspect-codess/?slug=${slug}` );
+            const data = await axios.get(`${baseUrl}/api/v1/patient-suspect-codes/?slug=${slug}` );
             return data.data;
         }
 
         else if (token) {
-            const data = await axios.get(`${baseUrl}/api/v1/patient-suspect-codess/`, 
+            const data = await axios.get(`${baseUrl}/api/v1/patient-suspect-codes/`, 
                { headers: getApiHeaders()}
             );
             return data.data;

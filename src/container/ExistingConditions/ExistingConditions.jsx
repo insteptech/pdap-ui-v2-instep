@@ -1223,14 +1223,14 @@ export const ExistingConditions = ({ sessionObject, handleAddEventData }) => {
 
                     {/* Content - RAF */}
                     {tabs && tabs["patient_dashboard_weights"]?.active && (
-                      <Grid item className="acc-content-header-item ct-raf">
+                      <Grid item className="acc-content-header-item ct-raf exiting-raf">
                         {tabs && tabs["patient_dashboard_weights"]?.active && (
                           <StyledText
                             sx={{
                               marginTop: "7px",
                               [theme.breakpoints.only("xl")]: {
                                 pr: 1,
-                                ml: 3,
+                                ml: 0.5,
                               },
                               [theme.breakpoints.only("md")]: {
                                 justifyContent: "start",

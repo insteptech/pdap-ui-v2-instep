@@ -2289,6 +2289,10 @@ export const Codes = () => {
                                           }}
                                         >
                                           <Tooltip
+                                          sx={{
+                                            padding: " 0px !important",
+                                            marginRight: "18px",
+                                          }}
                                             title={
                                               item?.code + " : " + item?.value
                                             }
@@ -2452,6 +2456,10 @@ export const Codes = () => {
                                           }}
                                         >
                                           <Tooltip
+                                          sx={{
+                                            padding: " 0px !important",
+                                            marginRight: "18px",
+                                          }}
                                             title={
                                               Object.keys(item) ||
                                               item[Object.keys(item)].value
@@ -2612,6 +2620,10 @@ export const Codes = () => {
                                             }}
                                           >
                                             <Tooltip
+                                            sx={{
+                                              padding: " 0px !important",
+                                              marginRight: "18px",
+                                            }}
                                               title={
                                                 item?.code + " : " + item?.value
                                               }
@@ -2761,6 +2773,10 @@ export const Codes = () => {
                                             }}
                                           >
                                             <Tooltip
+                                            sx={{
+                                              padding: " 0px !important",
+                                              marginRight: "18px",
+                                            }}
                                               title={
                                                 item?.code + " : " + item?.value
                                               }
@@ -3503,6 +3519,10 @@ export const Codes = () => {
                                     }}
                                   >
                                     <Tooltip
+                                    sx={{
+                                      padding: " 0px !important",
+                                      marginRight: "18px",
+                                    }}
                                       title={item?.code + " : " + item?.value}
                                     >
                                       <Typography
@@ -3540,6 +3560,10 @@ export const Codes = () => {
                                     }}
                                   >
                                     <Tooltip
+                                    sx={{
+                                      padding: " 0px !important",
+                                      marginRight: "18px",
+                                    }}
                                       title={item?.code + " : " + item?.value}
                                     >
                                       <Typography
@@ -3772,6 +3796,10 @@ export const Codes = () => {
                                     }}
                                   >
                                     <Tooltip
+                                    sx={{
+                                      padding: " 0px !important",
+                                      marginRight: "18px",
+                                    }}
                                       title={item?.code + " : " + item?.value}
                                     >
                                       <Typography
@@ -3811,6 +3839,10 @@ export const Codes = () => {
                                     }}
                                   >
                                     <Tooltip
+                                    sx={{
+                                      padding: " 0px !important",
+                                      marginRight: "18px",
+                                    }}
                                       title={item?.code + " : " + item?.value}
                                     >
                                       <Typography
@@ -3899,6 +3931,10 @@ export const Codes = () => {
                                     }}
                                   >
                                     <Tooltip
+                                    sx={{
+                                      padding: " 0px !important",
+                                      marginRight: "18px",
+                                    }}
                                       title={item?.code + " : " + item?.value}
                                     >
                                       <Typography
@@ -3937,6 +3973,10 @@ export const Codes = () => {
                                     }}
                                   >
                                     <Tooltip
+                                    sx={{
+                                      padding: " 0px !important",
+                                      marginRight: "18px",
+                                    }}
                                       title={item?.code + " : " + item?.value}
                                     >
                                       <Typography
@@ -4355,6 +4395,10 @@ export const Codes = () => {
                                           key={index}
                                         >
                                           <Tooltip
+                                          sx={{
+                                              padding: " 0px !important",
+                                              marginRight: "18px",
+                                            }}
                                             title={
                                               item?.code + " : " + item?.value
                                             }

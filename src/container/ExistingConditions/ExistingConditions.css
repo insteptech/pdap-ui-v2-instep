@@ -123,6 +123,9 @@
   .acc-content-header-item.ct-actions .acc-content-act-btn.act-btn-active {
     width: 100% !important;
   }
+  .exiting-raf{
+    padding-left: 10px !important;
+  }
 }
 
 @media screen and (max-width: 968px) {
