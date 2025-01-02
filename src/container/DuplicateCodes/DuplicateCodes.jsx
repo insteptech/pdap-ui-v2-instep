@@ -47,11 +47,13 @@ import {
   StyledButton1,
   StyledButton2,
 } from "../Common/StyledMuiComponents";
+import { convertDate } from "../../utils/helper";
 
-export const DuplicateCodes = ({ sessionObject }) => {
+export const DuplicateCodes = ({ sessionObject, handleAddEventData }) => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const tabs = TabsSlag();
+  const { doctorDetail } = useSelector((state) => state?.doctor?.data);
   const userDetail = useSelector((state) => state?.user?.data?.userInfo);
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
   const [expanded, setExpanded] = React.useState(false);
@@ -78,6 +80,9 @@ export const DuplicateCodes = ({ sessionObject }) => {
   const duplicateRejectCode = useSelector(
     (state) => state?.summary?.duplicateRejectCode
   );
+
+  const { user } = useSelector((state) => state);
+
   const [rejectDuplicateData, setDuplicateRejectData] =
     useState(duplicateRejectCode);
 
@@ -87,8 +92,45 @@ export const DuplicateCodes = ({ sessionObject }) => {
       let code = result[item];
       setHandleFunction(true);
       setSelectedRejectData(code);
+
+
+      const exampleMetadata = {
+        event_type: "DUPLICATE_CODES_REJECT_ALL_CODES",
+        metadata: {
+          identifier: tabs?.["user"]?.value || "",
+          provider_name: doctorDetail?.doctor_name || "",
+          patient_id: user?.data?.userInfo?.mrn || "",
+          event_datetime: convertDate(new Date().toISOString()),
+          code: item?.code,
+          description: item?.value ? item?.value : item?.info?.value,
+          reasonForRejection: "",
+          raf: item?.info?.total_weight,
+          alternateCodes: item?.info?.alternate_codes,
+          parentCodesCount: "",
+        },
+      };
+
+      handleAddEventData(exampleMetadata);
     } else {
       setSelectedRejectData(item);
+      setSelectedRejectData(item);
+      const exampleMetadata = {
+        event_type: "DUPLICATE_CODES_REJECTION_REASON_SELECTION",
+        metadata: {
+          identifier: tabs?.["user"]?.value || "",
+          provider_name: doctorDetail?.doctor_name || "",
+          patient_id: user?.data?.userInfo?.mrn || "",
+          event_datetime: convertDate(new Date().toISOString()),
+          code: item?.code,
+          description: item?.value ? item?.value : item?.info?.value,
+          reasonForRejection: rejectReason,
+          raf: item?.info?.total_weight,
+          alternateCodes: item?.info?.alternate_codes,
+          parentCodesCount: duplicateCodes?.length + 1,
+        },
+      };
+
+      handleAddEventData(exampleMetadata);
     }
     setSelectedMainCode(code);
     setDeleteOpen(true);
@@ -1002,7 +1044,7 @@ export const DuplicateCodes = ({ sessionObject }) => {
                                     '@media only screen and (min-width: 967px) and (max-width: 1017px)': {
                                       padding: "0.219rem 0.25rem",
                                     }
-,
+                                    ,
                                     '@media only screen and (max-width: 400px)': {
                                       padding: "0.219rem 0.25rem",
                                     }

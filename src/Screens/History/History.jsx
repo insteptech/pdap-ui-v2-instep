@@ -26,12 +26,11 @@ import {
 
 import "./History.css";
 
-
-import { MuiAccordions } from "../../components";
 import { patientHistory } from "../../redux/userSlice/patientInfoSlice";
 import { patientSummaryBarSlice } from "../../redux/userSlice/patientSummaryBarSlice";
 import { isSlugOrJwt } from "../../utils/helper";
 import { useLocation } from "react-router-dom";
+import { HistoryMuiAccordian } from "../../components/HistoryMuiAccordian";
 
 const StyleDiv = styled("div")(() => ({
   padding: "40px 0px",
@@ -66,7 +65,8 @@ const StyleIcon = styled("Div")(() => ({
 const BoxBg = {
   background: "#FAFAFA",
   borderRadius: "10px",
-  padding: "20px",
+  padding: "16px 20px",
+  border: '1px solid #E1E1E1',
 };
 
 const StylePoint = styled("Typography")(() => ({
@@ -350,7 +350,7 @@ export const History = () => {
                         },
                       }}
                     >
-                      <MuiAccordions
+                      <HistoryMuiAccordian
                         panel={item.date}
                         expanded={expanded}
                         setExpanded={setExpanded}
@@ -391,7 +391,8 @@ export const History = () => {
                               }}
                             >
                               <Grid container spacing={0} sx={{
-                                flexWrap: 'nowrap'
+                                flexWrap: 'nowrap',
+                                alignItems:'center'
                               }} >
                                 <Grid item xl='auto' lg='auto' md='auto' sm='auto' xs='auto'>
                                   <StylePoint>{data.icd_code}</StylePoint>
@@ -634,7 +635,7 @@ export const History = () => {
                           }
                         </Box>}
 
-                      </MuiAccordions>
+                      </HistoryMuiAccordian>
                     </Box>
                   );
                 })}

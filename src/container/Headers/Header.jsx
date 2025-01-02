@@ -209,7 +209,7 @@ export const Header = ({ sessionObject }) => {
                         routes?.map((item, i) => {
                           return item.name === "History" ? (
                             tabs &&
-                              tabs["patient_dashboard_history_tab"]?.active && (
+                              !tabs["patient_dashboard_history_tab"]?.active && (
                                 <Box
                                   key={i}
                                   onClick={() => {

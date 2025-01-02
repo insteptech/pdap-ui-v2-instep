@@ -96,6 +96,102 @@ export const MuiAccordions = (props) => {
     }
   }
 
+
+  const exampleMetadata5 = {
+    event_type: "CODES_NOT_IN_PROBLEM_LIST_EXPAND",
+    metadata: {
+      identifier: tabs?.["user"]?.value || "",
+      provider_name: doctorDetail?.doctor_name || "",
+      patient_id: user?.data?.userInfo?.mrn || "",
+      event_datetime: convertDate(new Date().toISOString()),
+
+    }
+  }
+
+
+  const exampleMetadata6 = {
+    event_type: "CODES_NOT_IN_PROBLEM_LIST_COLLAPSE",
+    metadata: {
+      identifier: tabs?.["user"]?.value || "",
+      provider_name: doctorDetail?.doctor_name || "",
+      patient_id: user?.data?.userInfo?.mrn || "",
+      event_datetime: convertDate(new Date().toISOString()),
+
+    }
+  }
+
+
+  const exampleMetadata7 = {
+    event_type: "ADDRESSED_CODES_EXPAND",
+    metadata: {
+      identifier: tabs?.["user"]?.value || "",
+      provider_name: doctorDetail?.doctor_name || "",
+      patient_id: user?.data?.userInfo?.mrn || "",
+      event_datetime: convertDate(new Date().toISOString()),
+
+    }
+  }
+
+
+  const exampleMetadata8 = {
+    event_type: "ADDRESSED_CODES_COLLAPSE",
+    metadata: {
+      identifier: tabs?.["user"]?.value || "",
+      provider_name: doctorDetail?.doctor_name || "",
+      patient_id: user?.data?.userInfo?.mrn || "",
+      event_datetime: convertDate(new Date().toISOString()),
+
+    }
+  }
+
+
+  const exampleMetadata9 = {
+    event_type: "ADDITIONAL_CODES_EXPAND",
+    metadata: {
+      identifier: tabs?.["user"]?.value || "",
+      provider_name: doctorDetail?.doctor_name || "",
+      patient_id: user?.data?.userInfo?.mrn || "",
+      event_datetime: convertDate(new Date().toISOString()),
+
+    }
+  }
+
+
+  const exampleMetadata10 = {
+    event_type: "ADDITIONAL_CODES_COLLAPSE",
+    metadata: {
+      identifier: tabs?.["user"]?.value || "",
+      provider_name: doctorDetail?.doctor_name || "",
+      patient_id: user?.data?.userInfo?.mrn || "",
+      event_datetime: convertDate(new Date().toISOString()),
+
+    }
+  }
+
+
+  const exampleMetadata11 = {
+    event_type: "DELETED_CODES_AND_CONDITION_EXPAND",
+    metadata: {
+      identifier: tabs?.["user"]?.value || "",
+      provider_name: doctorDetail?.doctor_name || "",
+      patient_id: user?.data?.userInfo?.mrn || "",
+      event_datetime: convertDate(new Date().toISOString()),
+
+    }
+  }
+
+
+  const exampleMetadata12 = {
+    event_type: "DELETED_CODES_AND_CONDITION_COLLAPSE",
+    metadata: {
+      identifier: tabs?.["user"]?.value || "",
+      provider_name: doctorDetail?.doctor_name || "",
+      patient_id: user?.data?.userInfo?.mrn || "",
+      event_datetime: convertDate(new Date().toISOString()),
+
+    }
+  }
+
   const getPanelNumber = (panelNumber = null) => {
     // Variables to check
     const codeList = {
@@ -155,6 +251,51 @@ export const MuiAccordions = (props) => {
       auditdata(exampleMetadata4);
     }
 
+    else if (isExpanded === true && panel === 3) {
+      auditdata(exampleMetadata5);
+    }
+
+
+    else if (isExpanded === false && panel === 3) {
+      auditdata(exampleMetadata6);
+    }
+
+    else if (isExpanded === true && panel === 4) {
+      auditdata(exampleMetadata7);
+    }
+
+
+    else if (isExpanded === false && panel === 4) {
+      auditdata(exampleMetadata8);
+    }
+
+    else if (isExpanded === true && panel === 5) {
+      auditdata(exampleMetadata9);
+    }
+
+
+    else if (isExpanded === false && panel === 5) {
+      auditdata(exampleMetadata10);
+    }
+
+    else if (isExpanded === true && panel === 6) {
+      auditdata(exampleMetadata11);
+    }
+
+
+    else if (isExpanded === false && panel === 6) {
+      auditdata(exampleMetadata12);
+    }
+
+    else if (isExpanded === true && panel === 7) {
+      auditdata(exampleMetadata2);
+    }
+
+
+    else if (isExpanded === false && panel === 7) {
+      auditdata(exampleMetadata4);
+    }
+
   };
 
   const auditdata = (data) => {
@@ -168,21 +309,14 @@ export const MuiAccordions = (props) => {
     }
   }
 
- 
-  
-
-  console.log(panel , "dfdsjfhdsjgd")
-
-   
-
   return (
     <Accordion
-      className={`${item.codeCount === 0 || item.codeCount === undefined ? 'my__accordian' : ''}`}
+      className={`${item?.codeCount === 0 || item?.codeCount === undefined ? 'my__accordian' : ''}`}
       expanded={panel ? expanded === panel : singleExpand}
       onChange={handleChange(panel || false)}
     >
       <StyledAccordionSummary 
-  expandIcon={(item.codeCount === 0 || item.codeCount === undefined) ? null : expandIcon}
+  expandIcon={(item?.codeCount === 0 || item?.codeCount === undefined) ? null : expandIcon}
   sx={{ ...sx }} className="pdap-act-summary">
         {header}
       </StyledAccordionSummary>
